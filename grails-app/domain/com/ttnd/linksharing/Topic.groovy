@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import enums.L_Visibility
+import enums.Seriousness
 
 class Topic {
     String name;
@@ -9,12 +10,27 @@ class Topic {
 
     Date lastUpdated;
     Date dateCreated;
-    static hasMany = [subscriptions:Subscription,linkResources:LinkResource,documentResource:DocumentResource]
+    static hasMany = [subscriptions: Subscription,resources:Resource]
     static constraints = {
 
-        name(blank:false,unique:'createdBy');
-        visibility(inlist:L_Visibility.values() as List);
+        name(blank: false, unique: 'createdBy');
+        visibility(inlist: L_Visibility.values() as List);
 
 
+    }
+
+    String toString()
+    {
+        return "Topic :${name}"
+
+    }
+
+    def afterInsert() {
+        withNewSession {
+            Subscription subscription = new Subscription(topic: this, user: this, seriousness: Seriousness.VERY_SERIOUS)
+            if (subscription.validate()) {
+                subscription.save()
+            }
+        }
     }
 }

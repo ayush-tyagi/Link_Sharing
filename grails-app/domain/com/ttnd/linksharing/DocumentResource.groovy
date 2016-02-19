@@ -7,4 +7,8 @@ class DocumentResource extends Resource {
 
         filePath(blank:false)
     }
+    String toString(){
+        return "${filePath}"
+    }
+
 }

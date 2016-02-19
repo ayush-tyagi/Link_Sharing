@@ -14,4 +14,8 @@ class Subscription {
 
         user(unique:'topic');
     }
+
+    void some(){
+        user.topics
+    }
 }

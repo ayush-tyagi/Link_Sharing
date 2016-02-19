@@ -4923,3 +4923,6 @@ n:2070:org/codehaus/groovy/transform/ImmutableASTTransformation$checkPropNames$0
 n:2070:org/codehaus/groovy/transform/ImmutableASTTransformation$checkPropNames$1
 n:1820:grails/util/BuildSettings$getBaseDir$4
 n:1408:java_io_File$getCanonicalPath$9
+n:4421:BuildConfig
+n:3023:BuildConfig$_run_closure1
+n:1663:org/codehaus/groovy/grails/plugins/log4j/Log4jConfig$_info_closure8

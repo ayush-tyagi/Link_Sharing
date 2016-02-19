@@ -7,6 +7,6 @@ class UtilController {
         log.warn("Sample warn")
         log.error("Sample error")
         log.fatal("Sample fatal")
-
+     render "success"
     }
 }

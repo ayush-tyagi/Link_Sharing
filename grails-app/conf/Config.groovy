@@ -120,8 +120,10 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'*/
 
+     info    'grails.app.controllers.com.ttnd.linksharing'
+     info    'grails.app.conf'
 
-    error 	 'org.codehaus.groovy.grails.web.servlet',        // controllers
+     error	 'org.codehaus.groovy.grails.web.servlet',        // controllers
             'org.codehaus.groovy.grails.web.pages',          // GSP
             'org.codehaus.groovy.grails.web.sitemesh',       // layouts
             'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
@@ -131,6 +133,5 @@ log4j.main = {
             'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
             'org.springframework',
             'org.hibernate',
-            'net.sf.ehcache.hibernate',
-            'com.ttnd.linksharing'
+            'net.sf.ehcache.hibernate'
 }

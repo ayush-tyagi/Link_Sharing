@@ -65,4 +65,22 @@ class UserSpec extends Specification {
         "swerew" | "Ayush tyagi" | "Ayush"   | "tyagi"  | "tyhg@s.com" | true
     }
 
+    def "Checking the toString method"() {
+        given: "User"
+        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: userName)
+
+        when: ""
+        String result = user.toString()
+
+        then:
+        result == resultantString
+
+        where:
+        userName  | resultantString
+        "Krishna" | "User is : Krishna"
+        ""        | "User is : null"
+        null      | "User is : null"
+
+
+    }
 }

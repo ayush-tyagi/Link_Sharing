@@ -27,7 +27,7 @@ class TopicSpec extends Specification {
 
 
         User user = new User(email_id: "helloa@yt.com", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: "Ram");
-        Topic topic = new Topic(name: topicName, createdBy: user, visibility: L_Visibility.PUBLIC);
+        Topic topic = new Topic(name: topicName, createdBy: user, visibility: L_Visibility.PUBLIC)
         when: "User will save"
         topic.save();
 
@@ -65,6 +65,22 @@ class TopicSpec extends Specification {
         3   | "grails" | "PUBLIC"   | true
         4   | "grails" | "PRIVATE"  | true
         5   | "grails" | "xyz"      | false
+
+    }
+
+    def "Checking toString method"() {
+        setup: ""
+        Topic topic = new Topic(name: topicName, visibility: L_Visibility.PUBLIC)
+        when:
+        String result = topic.toString()
+
+        then:
+        result == resultant
+
+        where:
+        topicName | resultant
+        "Groovy"  | "Topic :Groovy"
+        null      | "Topic :null"
 
     }
 }
