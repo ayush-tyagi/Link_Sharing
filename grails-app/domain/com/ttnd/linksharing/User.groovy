@@ -9,26 +9,37 @@ class User {
     String password;
     Boolean isActive;
     Boolean isAdmin;
+    String confirmPassword;
     byte[] photo;
-    static transients = ['name']
     Date lastUpdated;
     Date dateCreated;
-    static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating,readingItems:ReadingItem]
+    static transients = ['confirmPassword']
+    static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating, readingItems: ReadingItem]
     static mapping = {
 
         photo(sqlType: 'longblob')
+
     }
 
 
     static constraints = {
-        email_id(unique: true, blank: false, email: true);
-        password(blank: false, minSize: 5);
-        firstName(blank: false);
-        lastName(blank: false);
-        isActive(nullable: true);
-        isAdmin(nullable: true);
-        photo(nullable: true);
+        email_id(unique: true, blank: false, email: true)
+        password(blank: false, minSize: 5)
+        firstName(blank: false)
+        lastName(blank: false)
+        isActive(nullable: true)
+        isAdmin(nullable: true)
+        photo(nullable: true)
         userName nullable: false
+        confirmPassword(nullable: true, blank: true, validator: { confirmPassword, obj ->
+            Integer id = 0
+            id = obj.getId()
+            //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
+            if (!obj.id && obj.password != confirmPassword) {
+                "password.mismatch.confirmPassword"
+            }
+        })
+
     }
 
     String toString() {

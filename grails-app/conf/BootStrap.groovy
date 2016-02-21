@@ -6,6 +6,7 @@ import com.ttnd.linksharing.User
 import com.ttnd.linksharing.*
 import enums.L_Visibility
 import enums.Seriousness
+
 //import spock.util.mop.Use
 
 class BootStrap {
@@ -24,9 +25,11 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
         if (countRecords() <= 0) {
-            User user = new User(isAdmin: true, password: Constants.DEFAULT_PASSWORD, userName: "Krishna", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
+            User user = new User(isAdmin: true, isActive: true, password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", userName: "Krishna", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
+            user.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user)
-            User user1 = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+            User user1 = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+            user1.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user1)
         }
         users
@@ -39,8 +42,7 @@ class BootStrap {
             users.add(user)
             log.info("Successful insertion of :${user}")
         } else {
-            log.error("Unsuccessful :${user.errors.allErrors}")
-
+            log.error("Unsuccessful :${user.errors}")
         }
         users
     }
@@ -144,7 +146,7 @@ class BootStrap {
                         if (resource.createdBy != user && !users.readingItems.contains(resource)) {
                             ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
                             if (readingItem.validate()) {
-                                readingItem.save(flush:true)
+                                readingItem.save(flush: true)
                                 readingItems.add(readingItem)
                                 user.addToReadingItems(readingItem)
                                 log.info "${readingItem} saved successfully"
@@ -155,34 +157,34 @@ class BootStrap {
                 }
             }
             user.save()
+        }
+
+        return readingItems
     }
 
-    return readingItems
-}
+    List<ResourceRating> createResourceRating() {
+        List<User> users = User.list()
+        List<ResourceRating> resourceRatings = []
 
-    List<ResourceRating> createResourceRating(){
-    List<User> users = User.list()
-    List<ResourceRating> resourceRatings = []
+        users.each { user ->
+            user.readingItems.each { item ->
+                if (!item.isRead) {
+                    ResourceRating resourceRating = new ResourceRating(user: item.user, resource: item.resource, score: 3)
+                    if (resourceRating.validate()) {
+                        resourceRating.save()
+                        resourceRatings.add(resourceRating)
+                        log.info("....Done Successfully Resource Rating....${item}")
+                    } else {
+                        log.info("Sorry......${resourceRating.errors.allErrors}")
 
-    users.each{user->
-        user.readingItems.each{item->
-            if(!item.isRead){
-                ResourceRating resourceRating = new ResourceRating(user:item.user,resource:item.resource,score:3 )
-                if(resourceRating.validate()){
-                    resourceRating.save()
-                    resourceRatings.add(resourceRating)
-                    log.info("....Done Successfully Resource Rating....${item}")
-                }else{
-                    log.info("Sorry......${resourceRating.errors.allErrors}")
+                    }
 
                 }
-
+            }
         }
-        }
-    }
-    resourceRatings
+        resourceRatings
     }
 
-def destroy = {
-}
+    def destroy = {
+    }
 }
