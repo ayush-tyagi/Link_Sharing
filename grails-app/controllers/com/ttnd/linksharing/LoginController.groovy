@@ -4,7 +4,7 @@ class LoginController {
     def index() {
         def user = session["user"]
         if (user) {
-            forward(action: "index", controller: "User")
+            forward(action: "index", controller: "User",id:1)
         } else {
             render "Failure Login"
         }

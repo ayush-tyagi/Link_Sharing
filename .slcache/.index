@@ -4926,3 +4926,5 @@ n:1408:java_io_File$getCanonicalPath$9
 n:4421:BuildConfig
 n:3023:BuildConfig$_run_closure1
 n:1663:org/codehaus/groovy/grails/plugins/log4j/Log4jConfig$_info_closure8
+n:429:grails/web/RequestParameter
+n:2273:org/codehaus/groovy/grails/commons/GrailsApplication$isArtefactOfType

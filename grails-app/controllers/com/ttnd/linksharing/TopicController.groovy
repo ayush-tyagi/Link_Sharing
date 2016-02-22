@@ -6,8 +6,8 @@ class TopicController {
 
     def index() { }
 
-    def show(int id){
-        Topic topic = Topic.get(id)
+    def show(long id){
+        Topic topic = Topic.read(id)
 
         if(topic){
             if(topic.visibility== L_Visibility.PUBLIC){
@@ -26,5 +26,20 @@ class TopicController {
             flash.error="Topic does not exist"
         redirect(controller:'login' ,action:'index' )
         }
+    }
+
+    def save(Topic topic,String seriousness){
+        User user = session["user"]
+      topic.createdBy = user
+        if(topic.validate()){
+            topic.save()
+            flash.message ="Success"
+            render"Success"
+        }else {
+            flash.error = "Error on topic"
+            log.error("${topic.errors.allErrors}")
+        }
+
+
     }
 }

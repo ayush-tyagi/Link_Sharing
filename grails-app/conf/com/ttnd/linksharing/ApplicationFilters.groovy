@@ -5,10 +5,7 @@ class ApplicationFilters {
     def filters = {
         all(controller: '*', action: '*') {
             before = {
-                def user = session['user']
-                if (!user) {
-                    redirect(action: 'index', controller: 'login', id: user.id)
-                }
+             log.info("${params}")
             }
             after = { Map model ->
 
@@ -21,7 +18,12 @@ class ApplicationFilters {
 
         loginCheck(controller: '*', controllerExclude: 'login') {
             before = {
+                def user = session["user"]
+//                def Session=["user"]
 
+                if (!user) {
+                    redirect(action: 'index', controller: 'login')
+                }
             }
             true
         }

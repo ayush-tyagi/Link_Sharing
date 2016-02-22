@@ -16,9 +16,8 @@ class User {
     static transients = ['confirmPassword']
     static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating, readingItems: ReadingItem]
     static mapping = {
-
+        sort(id:'desc')
         photo(sqlType: 'longblob')
-
     }
 
 
@@ -32,24 +31,20 @@ class User {
         photo(nullable: true)
         userName nullable: false
         confirmPassword(nullable: true, blank: true, validator: { confirmPassword, obj ->
-            Integer id = 0
+            Long id = 0
             id = obj.getId()
             //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
             if (!obj.id && obj.password != confirmPassword) {
                 "password.mismatch.confirmPassword"
             }
         })
-
     }
 
     String toString() {
-
         return "User is : ${userName}"
     }
 
     String getName() {
         [this.firstName, this.lastName].join(' ')
-
     }
-
 }

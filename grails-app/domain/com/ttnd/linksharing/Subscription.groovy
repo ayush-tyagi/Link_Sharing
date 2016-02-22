@@ -11,8 +11,11 @@ class Subscription {
     Seriousness seriousness;
     static belongsTo = [user:User,topic:Topic]
     static constraints = {
-
         user(unique:'topic');
+    }
+
+    static mapping = {
+        seriousness defaultValue:"SERIOUS"
     }
 
     void some(){
