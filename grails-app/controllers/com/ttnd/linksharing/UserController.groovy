@@ -3,7 +3,7 @@ package com.ttnd.linksharing
 class UserController {
 
     def index(long id) {
-        def user = User.get(id)
+        User user = User.get(id)
         render "User DashBoard ${session} ${user} ${user.userName}"
     }
 

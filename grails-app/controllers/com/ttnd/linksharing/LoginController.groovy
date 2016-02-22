@@ -2,9 +2,9 @@ package com.ttnd.linksharing
 
 class LoginController {
     def index() {
-        def user = session["user"]
+        User user = session["user"]
         if (user) {
-            forward(action: "index", controller: "User",id:1)
+            forward(action: "index", controller: "User",id:user.id)
         } else {
             render "Failure Login"
         }

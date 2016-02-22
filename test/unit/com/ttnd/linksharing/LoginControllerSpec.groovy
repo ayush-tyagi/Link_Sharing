@@ -16,14 +16,24 @@ class LoginControllerSpec extends Specification {
     }
 
     def "test index action"() {
-
-
-     when:""
+        setup:""
+        User user = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+        session['user'] = user
+        when: ""
         controller.index()
-        then:""
+        then: ""
+        response.forwardedUrl=="/user/index"
+    }
+    def "test logout"() {
+        when: ""
+        controller.logout()
 
+        then: ""
+        response.forwardedUrl == "/login/index"
+    }
 
-
+    def "test loginHandler"(){
+    setup:""
 
     }
 }

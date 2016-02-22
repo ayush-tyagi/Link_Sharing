@@ -11,7 +11,7 @@ class TopicController {
 
         if(topic){
             if(topic.visibility== L_Visibility.PUBLIC){
-                render("Succes")
+                render("Success")
             }else if(topic.visibility== L_Visibility.PRIVATE){
                 User user = session["user"]
              Subscription subscription = Subscription.findByTopicAndUser(topic,user)
