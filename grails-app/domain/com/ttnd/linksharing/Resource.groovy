@@ -1,6 +1,8 @@
 package com.ttnd.linksharing
 
-     abstract class Resource {
+import CO.ResourceSearchCo
+
+abstract class Resource {
     String description;
     User createdBy;
     Topic topic;
@@ -14,6 +16,22 @@ package com.ttnd.linksharing
     }
 
     static constraints = {
+    }
+
+    static namedQueries = {
+        search{ ResourceSearchCo co->
+            if(co.topicId) {
+             'topic' {
+                 eq('id',co.topicId)
+
+             }
+            }
+        }
+    }
+
+    String toString()
+    {
+    return "${topic.name}"
     }
 }
 

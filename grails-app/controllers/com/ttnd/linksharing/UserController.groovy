@@ -8,16 +8,16 @@ class UserController {
     }
 
     def register() {
-        User user = new User(email_id: params.email, userName: params.userName, firstName: params.firstName, lastName: params.lastName, password: params.password)
-        if(user.validate() && user.save()){
+        User user = new User(email_id: "tyagi@hand.cm", userName: "safgagf", firstName: "afgffg", lastName: "gfggg", password: "fdfggggdfgr",confirmPassword: "fdfggggdfgr")
+        if(user.validate() ){
+            user.save()
             flash.message="Successful registration"
             render flash.message
         } else if (user.hasErrors()) {
-            errors.allErrors.each {
-                render "${it}"
+            flash.message = "${user} not added--- ${user.errors.allErrors}"
+            render "${user.errors.allErrors.collect { message(error: it) }.join(',')}"
             }
         }
 
 
     }
-}
