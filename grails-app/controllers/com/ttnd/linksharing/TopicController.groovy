@@ -6,7 +6,7 @@ class TopicController {
 
     def index() { }
 
-    def show(long id){
+    def show(long id,ResourceSearchCo co){
         Topic topic = Topic.read(id)
 
         if(topic){
