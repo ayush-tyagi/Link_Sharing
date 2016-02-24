@@ -21,7 +21,7 @@ class Topic {
     { return "Topic :${name}"
     }
     def afterInsert() {
-        withNewSession {
+        Topic.withNewSession {
             Subscription subscription = new Subscription(topic: this, user: this, seriousness: Seriousness.VERY_SERIOUS)
             if (subscription.validate()) {
                 subscription.save()

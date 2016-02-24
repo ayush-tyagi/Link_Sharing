@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
-
-import CO.ResourceSearchCo
+import com.ttnd.linksharing.co.ResourceSearchCo
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.RatingInfoVo
+import enums.L_Visibility
 
 class ResourceController {
 
@@ -21,8 +22,24 @@ class ResourceController {
     }
 
     def search(ResourceSearchCo co){
-        println "co : ${co.properties}"
+
+        if(co.q){
+
+            co.visibility = L_Visibility.PUBLIC
         List<Resource> resources = Resource.search(co).list()
-        render resources
+            render resources
+        }
+    }
+
+    def show(Long id){
+        println "____>>>>>>>>>>>${id}"
+        Resource resource = Resource.get(id)
+        if(resource){
+            RatingInfoVo ratingInfoVo = resource.getRatingInfoVo()
+         render "${ratingInfoVo}"
+        }else{
+            flash.error = "Resource not found"
+            redirect(uri:'/')
+        }
     }
 }

@@ -18,7 +18,7 @@ class BootStrap {
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
         List<Resource> resources = createResources()
-//        List<Subscription> subscriptions = subscribeTopics()
+        List<Subscription> subscriptions = subscribeTopics()
         List<ReadingItem> readingItems = createReadingItems()
        List<ResourceRating> resourceRatings = createResourceRating()
     }
@@ -124,7 +124,7 @@ class BootStrap {
         resources
     }
 
- /*   List<Subscription> subscribeTopics() {
+    List<Subscription> subscribeTopics() {
         List<User> users = User.list()
         List<Topic> topics = Topic.list()
         List<Subscription> subscriptions = []
@@ -146,7 +146,7 @@ class BootStrap {
             }
         }
         subscriptions
-    }*/
+    }
 
     List<ReadingItem> createReadingItems() {
         List<User> users = User.list()
@@ -180,17 +180,20 @@ class BootStrap {
     List<ResourceRating> createResourceRating() {
         List<User> users = User.list()
         List<ResourceRating> resourceRatings = []
-
+       println "-------------------------------------------------------------------------------->>>>>>>>>${users}<<<<<<<<<<"
         users.each { user ->
+
             user.readingItems.each { item ->
                 if (!item.isRead) {
+                    println "------------->>>>>>>>."
                     ResourceRating resourceRating = new ResourceRating(user: item.user, resource: item.resource, score: 3)
                     if (resourceRating.validate()) {
-                        resourceRating.save()
+                        resourceRating.save(flush:true,failOnError: true)
                         resourceRatings.add(resourceRating)
-                        log.info("....Done Successfully Resource Rating....${item}")
+                        log.info("....>>>>>>>>>>>>>>Done Successfully Resource Rating<<<<<<<<<<<<<<<<<....${item}")
                     } else {
-                        log.info("Sorry......${resourceRating.errors.allErrors}")
+                        println "_______+++++++++"
+                        log.info("----------Sorry......${resourceRating.errors.allErrors}")
 
                     }
 
