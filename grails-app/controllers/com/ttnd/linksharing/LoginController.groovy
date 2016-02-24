@@ -12,7 +12,6 @@ class LoginController {
 
     def loginHandler(String name, String password) {
         User user = User.findByFirstNameAndPassword(name,password)
-        println "---------${name}---${password}-------->${user}"
         if(user ) {
             if (user.isActive) {
                 session["user"] = user

@@ -29,8 +29,8 @@ environments {
             username = "root"
             password = "igdefault"
             dbCreate = "create-drop"
-            url = "jdbc:mysql://localhost:3306/LinkSharing"
-            logSql = true
+            url = "jdbc:mysql://localhost:3306/linksharing"
+            logSql = false
         }
     }
     test {

@@ -2,13 +2,14 @@ package com.ttnd.linksharing
 
 import CO.ResourceSearchCo
 import enums.L_Visibility
+import enums.Seriousness
 
 class TopicController {
 
     def index() { }
 
-    def show(long id,ResourceSearchCo co){
-        Topic topic = Topic.read(id)
+    def show(Long idx){
+        Topic topic = Topic.read(idx)
 
         if(topic){
             if(topic.visibility== L_Visibility.PUBLIC){
@@ -31,13 +32,14 @@ class TopicController {
 
     def save(Topic topic,String seriousness){
         User user = session["user"]
-      topic.createdBy = user
+        Seriousness seriousness1 = Seriousness.changeStringInSeriousness(seriousness)
         if(topic.validate()){
-            topic.save()
+            topic.save(flush: true)
             flash.message ="Success"
             render"Success"
         }else {
             flash.error = "Error on topic"
+            render flash.error
             log.error("${topic.errors.allErrors}")
         }
 

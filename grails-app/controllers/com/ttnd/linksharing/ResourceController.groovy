@@ -6,7 +6,7 @@ class ResourceController {
 
     def index() { }
 
-    def delete(long id){
+    def delete(Long id){
     Resource resource = Resource.load(id)
         if(resource.delete()){
             render "Successful Deletion"

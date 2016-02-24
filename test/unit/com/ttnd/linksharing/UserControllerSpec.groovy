@@ -14,7 +14,19 @@ class UserControllerSpec extends Specification {
 
     def cleanup() {
     }
+    def" Resgister test"() {
+        when:""
+        controller.register()
+        then:""
+        response.text=="Successful registration"
+    }
 
-    void "test something"() {
+    def"Testing Index action"(){
+        setup:""
+        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: "Aakash")
+        when:""
+        controller.index(user.id)
+        then:""
+        response.text =="User DashBoard Session Content: User is : Krishna Krishna"
     }
 }

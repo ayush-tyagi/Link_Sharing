@@ -4,21 +4,18 @@ import enums.Seriousness
 import grails.plugin.cache.SerializableOutputStream
 
 class Subscription {
-    Topic topic;
-    User user;
-    Date dateCreated;
-    Date lastUpdated;
-    Seriousness seriousness;
+    Topic topic
+    User user
+    Date dateCreated
+    Date lastUpdated
+    Seriousness seriousness = Seriousness.SERIOUS
     static belongsTo = [user:User,topic:Topic]
     static constraints = {
-        user(unique:'topic');
+        user unique:'topic'
     }
 
     static mapping = {
-        seriousness defaultValue:"SERIOUS"
+
     }
 
-    void some(){
-        user.topics
-    }
 }
