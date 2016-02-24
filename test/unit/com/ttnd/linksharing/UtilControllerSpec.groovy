@@ -15,6 +15,5 @@ class UtilControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
-    }
+
 }
