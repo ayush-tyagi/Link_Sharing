@@ -4,25 +4,26 @@ import enums.Seriousness
 
 class SubscriptionController {
 
-    def index() { }
+    def index() {}
 
-    def save(long id){
-        def topic = Topic.get(id)
-        def user = session["user"]
-        def subscription = new Subscription(topic:topic,user:user)
-        if(subscription.validate()){
-            subscription.save()
+    def save(Long id) {
+        Topic topic = Topic.get(id)
+        User user = session["user"]
+        Subscription subscription = new Subscription(topic: topic, user: user)
+        if (subscription.validate()) {
+            subscription.save(flush: true)
             render "Success"
         }else{
-            render "Error"
+            render "${subscription.errors.allErrors}"
         }
     }
 
-    def update(long id){                           //,Seriousness seriousness
+    /*def update(Long id){                           //,Seriousness seriousness
         if(id){
             Topic topic = Topic.get(id)
             User user = session["user"]
             Subscription subscription = new Subscription(topic:topic,user:user)
+
             if(subscription.validate()){
                 subscription.save()
                 render "Success"
@@ -31,15 +32,14 @@ class SubscriptionController {
             }
 
         }
-    }
+    }*/
 
-    def delete(long id){
-        def user = User.get(id)
-        if(user){
-         user.delete()
+    def delete(Long id) {
+        User user = User.get(id)
+        if (user) {
+            user.delete()
             render "Successful Deletion"
-        }
-        else{
+        } else {
             render "User not Found  "
         }
     }

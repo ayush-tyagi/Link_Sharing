@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import CO.ResourceSearchCo
+
 class ResourceController {
 
     def index() { }
@@ -16,5 +18,11 @@ class ResourceController {
         }}else{
             render "Not Found"
         }
+    }
+
+    def search(ResourceSearchCo co){
+        println "co : ${co.properties}"
+        List<Resource> resources = Resource.search(co).list()
+        render resources
     }
 }

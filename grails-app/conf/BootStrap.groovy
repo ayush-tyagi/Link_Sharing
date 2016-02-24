@@ -14,13 +14,28 @@ class BootStrap {
     def grailsApplication;
 
     def init = { servletContext ->
+//        createExperiment()
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
         List<Resource> resources = createResources()
-        List<Subscription> subscriptions = subscribeTopics()
+//        List<Subscription> subscriptions = subscribeTopics()
         List<ReadingItem> readingItems = createReadingItems()
-        List<ResourceRating> resourceRatings = createResourceRating()
+       List<ResourceRating> resourceRatings = createResourceRating()
     }
+
+//    def createExperiment(){
+//        Experiment exp=new Experiment(address:"sdvSFW",name:"one",ex_id: 1)
+//        if(exp.validate()){
+//            exp.save(flush:true)
+//            log.info("----------------------------------------->")
+//        }else{log.info("===================================>")}
+//        Experiment exp1=new Experiment(address:"sdvSFsgsgW",name:"onsdgsgsdgse",ex_id: 1)
+//        if(exp1.validate()){
+//            exp1.save(flush:true)
+//            log.info("-----2---3---3--45-6--8------------------------->")
+//        }else{println "+++++++++++++++++++++++++${exp1.errors.allErrors}"}
+//
+//    }
 
     List<User> createUsers() {
         List<User> users = []
@@ -109,7 +124,7 @@ class BootStrap {
         resources
     }
 
-    List<Subscription> subscribeTopics() {
+ /*   List<Subscription> subscribeTopics() {
         List<User> users = User.list()
         List<Topic> topics = Topic.list()
         List<Subscription> subscriptions = []
@@ -131,7 +146,7 @@ class BootStrap {
             }
         }
         subscriptions
-    }
+    }*/
 
     List<ReadingItem> createReadingItems() {
         List<User> users = User.list()

@@ -18,6 +18,7 @@ class User {
     static mapping = {
         sort(id:'desc')
         photo(sqlType: 'longblob')
+
     }
 
 
@@ -30,7 +31,7 @@ class User {
         isAdmin(nullable: true)
         photo(nullable: true)
         userName nullable: false
-        confirmPassword(nullable: true, blank: true, validator: { confirmPassword, obj ->
+        confirmPassword(nullable: true,bindable:true, blank: true, validator: { confirmPassword, obj ->
             Long id = 0
             id = obj.getId()
             //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
