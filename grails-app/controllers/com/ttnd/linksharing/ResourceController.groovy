@@ -4,12 +4,17 @@ class ResourceController {
 
     def index() { }
 
-    def delete(long id){
-    Resource resource = Resource.load(id)
-        if(resource.delete()){
+    def delete(Long id){
+        Resource resource = Resource.load(id)
+        if(resource){
+        try{
+            resource.delete(flush: true)
             render "Successful Deletion"
-        }else{
-            log.info("${resource.errors.allErrors}")
+        }
+        catch(Exception e){
+            render "Unsuccessful"
+        }}else{
+            render "Not Found"
         }
     }
 }

@@ -16,5 +16,12 @@ class ResourceControllerSpec extends Specification {
     }
 
     void "test something"() {
+        setup:""
+        Long id=3
+
+        when:""
+        controller.delete(id)
+        then:""
+        response.text=="Successful Deletion"
     }
 }
