@@ -2,19 +2,20 @@ package com.ttnd.linksharing
 
 class LoginController {
     def index() {
-        User user = session["user"]
+        User user = session.user
         if (user) {
-            forward(action: "index", controller: "User", id: user.id)
+            log.info user.userName
+            forward(action: "index", controller: "user", id: user.id)
         } else {
-            render "Failure Login"
+          //  render "Failure Login"
         }
     }
 
-    def loginHandler(String name, String password) {
-        User user = User.findByFirstNameAndPassword(name, password)
+    def loginHandler(String userName, String password) {
+        User user = User.findByFirstNameAndPassword(userName, password)
         if (user) {
             if (user.isActive) {
-                session["user"] = user
+                session.user=user
                 redirect(action: "index", controller: "login")
             } else {
                 flash.message = "Your account is not active.."

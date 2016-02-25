@@ -1,6 +1,6 @@
 package com.ttnd.linksharing
 
-import CO.ResourceSearchCo
+//import CO.ResourceSearchCo
 import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
@@ -17,7 +17,7 @@ class TopicController {
             if(topic.visibility== L_Visibility.PUBLIC){
                 render("Success")
             }else if(topic.visibility== L_Visibility.PRIVATE){
-                User user = session["user"]
+                User user = session.user
              Subscription subscription = Subscription.findByTopicAndUser(topic,user)
                 if(subscription){
                     render("Success")
@@ -32,20 +32,21 @@ class TopicController {
         }
     }
 
-    def save(Topic topic,String seriousness){
-        User user = session["user"]
-        Seriousness seriousness1 = Seriousness.changeStringInSeriousness(seriousness)
+    def save(String topicName,String visibility){
+        log.info topicName
+        log.info visibility
+        User user = session.user
+        log.info user
+        Topic topic=new Topic(name:topicName,createdBy: user,visibility: L_Visibility.valueOf(visibility))
         if(topic.validate()){
             topic.save(flush: true)
             flash.message ="Success"
-            render"Success"
+            render "Success"
         }else {
             flash.error = "Error on topic"
             render flash.error
             log.error("${topic.errors.allErrors}")
         }
-
-
     }
 
     def show1(){

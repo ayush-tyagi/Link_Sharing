@@ -47,4 +47,10 @@ class Topic {
         }
         results
     }
+
+    static List getTopicsOfUser(User user){
+     List<Topic> topicList =Topic.findAllByCreatedBy(user)
+     List topicNames = topicList.collect{it.name}
+     return topicNames
+    }
 }

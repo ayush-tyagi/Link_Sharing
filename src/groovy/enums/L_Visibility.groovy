@@ -7,7 +7,7 @@ enum L_Visibility {
     PUBLIC,
     PRIVATE
 
-    L_Visibility changeStringInVisibility(String inputText) {
+    static changeStringInVisibility(String inputText) {
         if (inputText) {
             inputText = inputText.toUpperCase()
           if(PUBLIC == inputText as L_Visibility){

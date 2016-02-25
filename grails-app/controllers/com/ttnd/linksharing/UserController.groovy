@@ -2,9 +2,11 @@ package com.ttnd.linksharing
 
 class UserController {
 
-    def index(Long id) {
-        User user = User.get(id)
-        render "User DashBoard ${session} ${user} ${user.userName}"
+    def index() {
+//        User user = User.get(id)
+        //render "User DashBoard ${session} ${user} ${user.userName}"
+       List topicNames= Topic.getTopicsOfUser(session.user)
+        render(view:'index',model:[topicNames:topicNames])
     }
 
     def register() {
