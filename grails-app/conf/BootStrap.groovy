@@ -40,7 +40,7 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
         if (countRecords() <= 0) {
-            User user = new User(isAdmin: true, isActive: true, password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", userName: "Krishna", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
+            User user = new User(isAdmin: true,isActive: true, password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", userName: "Krishna", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
             user.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user)
             User user1 = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
@@ -73,7 +73,7 @@ class BootStrap {
         User.list().each { it ->
             if (!it.topics) {
                 (1..5).each { index ->
-                    Topic topic = new Topic(name: "topic${it}Name${index}", createdBy: it, visibility: L_Visibility.PUBLIC)
+                    Topic topic = new Topic(name: "${it}Name${index}", createdBy: it, visibility: L_Visibility.PUBLIC)
                     if (topic.validate()) {
                         topic.save(flush: true)
                         topics.add(topic)

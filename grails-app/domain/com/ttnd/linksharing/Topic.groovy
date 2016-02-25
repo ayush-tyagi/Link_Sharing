@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 import enums.Seriousness
 
@@ -18,7 +19,7 @@ class Topic {
         sort(name:'asc')
     }
     String toString()
-    { return "Topic :${name}"
+    { return "Topic ${id}"
     }
     def afterInsert() {
         Topic.withNewSession {
@@ -27,5 +28,23 @@ class Topic {
                 subscription.save()
             }
         }
+    }
+
+    static List getTrendingTopics(){
+
+        List results = Topic.createCriteria().list([max:5]){
+            eq('visibility',L_Visibility.PUBLIC)
+            'projections'{
+                createAlias('resources','r')
+                groupProperty('id')
+                count('r.id','cnt')
+                property('name')
+                property('createdBy')
+            }
+            order('cnt','desc')
+            order('name','desc')
+
+        }
+        results
     }
 }

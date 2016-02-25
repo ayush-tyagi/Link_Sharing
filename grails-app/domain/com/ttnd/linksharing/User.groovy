@@ -42,7 +42,7 @@ class User {
     }
 
     String toString() {
-        return "User is : ${userName}"
+        return "${userName}"
     }
 
     String getName() {

@@ -4,6 +4,7 @@ package com.ttnd.linksharing
 import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.RatingInfoVo
 import enums.L_Visibility
+import org.hibernate.criterion.CriteriaSpecification
 
 abstract class Resource {
     String description;
@@ -38,9 +39,7 @@ abstract class Resource {
 
     RatingInfoVo getRatingInfoVo() {
         List result = ResourceRating.createCriteria().get {
-            'resource' {
-                eq('id', this.id)
-            }
+
             'projections' {
                 count('score')
                 avg('score')
@@ -54,6 +53,20 @@ abstract class Resource {
 
     }
 
+    static List topPost(){
+        List res = ResourceRating.createCriteria().list([max:5]){
+
+        'projections'{
+                      createAlias('resource','r')
+                      property('r.id','id')
+                      groupProperty('r.id','rId')
+                      count('id','totalVotes')
+                    }
+            order('totalVotes','desc')
+        }
+        res
+//     println "-------------->${res}"
+    }
 }
 
 

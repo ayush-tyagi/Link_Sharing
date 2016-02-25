@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 import CO.ResourceSearchCo
 import com.ttnd.linksharing.co.ResourceSearchCo
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 import enums.Seriousness
 
@@ -45,5 +46,10 @@ class TopicController {
         }
 
 
+    }
+
+    def show1(){
+        List<TopicVo> list = Topic.getTrendingTopics()
+        render "${list}"
     }
 }

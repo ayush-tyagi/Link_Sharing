@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.RatingInfoVo
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 
 class ResourceController {
@@ -41,5 +42,12 @@ class ResourceController {
             flash.error = "Resource not found"
             redirect(uri:'/')
         }
+
+        List list =Topic.getTrendingTopics()
+        List<TopicVo> topicVos= []
+        list.each {results->
+            topicVos.add(new TopicVo(id :results[0] as Long,name:results[2],visibility:L_Visibility.PUBLIC,createdBy:results[3] as User ,count:results[1] as Integer ))
+        }
+        render "${topicVos*.properties}"
     }
 }

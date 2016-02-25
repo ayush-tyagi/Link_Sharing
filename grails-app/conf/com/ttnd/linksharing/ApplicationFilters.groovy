@@ -15,18 +15,18 @@ class ApplicationFilters {
 //            }
             true
 //        }
-
-        loginCheck(controller: '*', controllerExclude: 'login') {
-            before = {
-//                def user = session["user"]
-////                def Session=["user"]
 //
-//                if (!user) {
-//                    redirect(action: 'index', controller: 'login')
-//                }
-            }
-            true
-        }
+//        loginCheck(controller: '*', controllerExclude: 'login') {
+//            before = {
+////                def user = session["user"]
+//////                def Session=["user"]
+////
+////                if (!user) {
+////                    redirect(action: 'index', controller: 'login')
+////                }
+//            }
+//            true
+//        }
 
         sessionCheck(controller: '', action: '') {
             before = {
