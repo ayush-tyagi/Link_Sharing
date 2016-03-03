@@ -53,20 +53,14 @@ abstract class Resource {
 
     }
 
-    static List topPost(){
-        List res = ResourceRating.createCriteria().list([max:5]){
-
-        'projections'{
-                      createAlias('resource','r')
-                      property('r.id','id')
-                      groupProperty('r.id','rId')
-                      count('id','totalVotes')
-                    }
-            order('totalVotes','desc')
-        }
-        res
-//     println "-------------->${res}"
+    static List<Resource> getTopPosts()
+    {
+        List list = ResourceRating.topPost()
+        List<Resource> resources = Resource.getAll(list)
+        resources
     }
+
+
 }
 
 

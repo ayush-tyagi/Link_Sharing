@@ -12,4 +12,17 @@ class ResourceRating {
         score(min:1,max:5)
         user(unique:'resource')
     }
+
+    static List topPost(){
+        List res = ResourceRating.createCriteria().list([max:5]){
+            projections{
+                groupProperty('resource.id')
+                count('score','res')
+            }
+            order('res','desc')
+        }
+//        render "${resources}"
+//     println "-------------->${res}"
+        res
+    }
 }

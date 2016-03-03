@@ -1,12 +1,19 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
+
 class UserController {
 
     def index() {
+        User user = session.user
 //        User user = User.get(id)
         //render "User DashBoard ${session} ${user} ${user.userName}"
-       List topicNames= Topic.getTopicsOfUser(session.user)
-        render(view:'index',model:[topicNames:topicNames])
+       List topicNames = Topic.getTopicsOfUser(user)
+        List<TopicVo> trendingTopics = Topic.getTrendingTopics()
+
+        List subscribedTopics = User.getSubscribedTopics(user)
+        println "size : ${subscribedTopics.size()}"
+        render(view:'index',model:[topicNames:topicNames,trendingTopics:trendingTopics,subscribedTopics:subscribedTopics])
     }
 
     def register() {

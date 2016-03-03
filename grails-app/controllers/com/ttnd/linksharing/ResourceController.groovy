@@ -43,23 +43,36 @@ class ResourceController {
             redirect(uri: '/')
         }
 
-        List list = Topic.getTrendingTopics()
-        List<TopicVo> topicVos = []
-        list.each { results ->
-            topicVos.add(new TopicVo(id: results[0] as Long, name: results[2], visibility: L_Visibility.PUBLIC, createdBy: results[3] as User, count: results[1] as Integer))
-        }
-        render "${topicVos*.properties}"
+        List<TopicVo> list = Topic.getTrendingTopics()
+        render view: '/topic/trendingTopics'
+        //render list*.properties
     }
 
-    def saveDocumentResource(String description, String topicName, String filePath) {
+    def saveLinkResource(String description, String topicName, String link) {
+        println "==========>${params}"
         User user= session.user
-        Topic topic = User.getTopicByName(topicName)
-        DocumentResource documentResource = new DocumentResource(description: description, topic: topic, filePath: filePath)
-        if (documentResource.validate()) {
-            documentResource.save(flush: true)
+        Topic topic = Topic.findByNameAndCreatedBy(topicName,user)
+        println "---------------->${topic}"
+        Resource linkResource = new LinkResource(description: description,topic: topic,createdBy: user,url: link)
+        println "=============================>>>>>${linkResource}"
+        if (linkResource.validate()) {
+            linkResource.save(flush: true)
             render "Successful Save"
         } else {
             render "Unsuccessful"
         }
     }
+
+
+//    def saveDocumentResource(String description, String topicName, String filePath) {
+//        User user= session.user
+//        Topic topic= Topic.findByNameAndCreatedBy(topicName,user)
+//        DocumentResource documentResource = new DocumentResource(description: description, topic: topic, filePath: filePath)
+//        if (documentResource.validate()) {
+//            documentResource.save(flush: true)
+//            render "Successful Save"
+//        } else {
+//            render "Unsuccessful"
+//        }
+//    }
 }

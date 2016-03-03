@@ -1,11 +1,12 @@
 package com.ttnd.linksharing
 
-class Experiment {
-    int ex_id
+class Person {
+
     String name
+    Integer age
     String address
+
     static constraints = {
-    }
-    static mapping = {
+        address(nullable: true)
     }
 }

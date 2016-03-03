@@ -9,11 +9,12 @@ class User {
     String password;
     Boolean isActive;
     Boolean isAdmin;
-    String confirmPassword;
+    String confirmPassword
+    List subscribedTopics
     byte[] photo;
     Date lastUpdated;
     Date dateCreated;
-    static transients = ['confirmPassword']
+    static transients = ['confirmPassword','subscribedTopics']
     static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating, readingItems: ReadingItem]
     static mapping = {
         sort(id:'desc')
@@ -47,5 +48,14 @@ class User {
 
     String getName() {
         [this.firstName, this.lastName].join(' ')
+    }
+
+     static List getSubscribedTopics(User user){
+        def list=Subscription.createCriteria().list(){
+            'projections'{
+                property('topic')
+            }
+            eq('user',user)
+        }
     }
 }

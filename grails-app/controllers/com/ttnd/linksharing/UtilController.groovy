@@ -20,5 +20,20 @@ class UtilController {
         }
     }
 
+    def first(){
+       flash.message = "This is First Message"
+        render "${flash.message}"
+        forward(uri:"util/second" )
+    }
+    def second(){
+        render "${flash.message}"
+        forward(controller:'util' ,action:'third' )
+    }
+    def third(){
+     render "${flash.message}"
+    }
 
+    def hell(){
+        render "Kon h tu"
+    }
 }

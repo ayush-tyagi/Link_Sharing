@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ayush
-  Date: 26/2/16
-  Time: 12:09 AM
+  Date: 3/3/16
+  Time: 5:09 PM
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -14,5 +14,6 @@
 
 <body>
 
+<g:render template="/topic/trendingTopics"/>
 </body>
 </html>

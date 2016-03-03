@@ -14,6 +14,7 @@ class BootStrap {
     def grailsApplication;
 
     def init = { servletContext ->
+
 //        createExperiment()
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
@@ -41,10 +42,10 @@ class BootStrap {
         List<User> users = []
         if (countRecords() <= 0) {
             User user = new User(isAdmin: true,isActive: true, password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", userName: "Krishna", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
-            user.confirmPassword = "abcdef"
+//            user.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user)
             User user1 = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
-            user1.confirmPassword = "abcdef"
+//            user1.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user1)
         }
         users

@@ -66,7 +66,7 @@
 						<div class="col-xs-5">
 							<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal4" 					style="border:none;background:none;color:black">
 								<div class="glyphicon glyphicon-comment"></div></button>
-							<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1" 					style="border:none;background:none;color:black"><div class="glyphicon glyphicon-envelope"></div></button>
+							<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal14" 					style="border:none;background:none;color:black"><div class="glyphicon glyphicon-envelope"></div></button>
 							<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2" 					style="border:none;background:none;color:black"><div class="glyphicon glyphicon-paperclip"></div></button>
 							<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal3" 					style="border:none;background:none;color:black"><div class="glyphicon glyphicon-edit"></div></button>
 
@@ -94,7 +94,9 @@
 		</div>
 		<g:render template="/topic/create"/>
 		<g:render template="/topic/email"/>
-		<g:render template="/resource/documentResourceCreate"/>
+		<g:render template="/resource/createDocumentResource"/>
+		<g:render template="/resource/createLinkResource"/>
+		<g:render template="/subscription/sendInvitation"/>
 		<g:layoutBody/>
 	</body>
 </html>

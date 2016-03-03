@@ -7,6 +7,9 @@ class LoginController {
             log.info user.userName
             forward(action: "index", controller: "user", id: user.id)
         } else {
+            List recentShares = Topic.list([sort: 'dateCreated',order: 'desc',max: 2,offset: 0])
+            List<Resource> resources1 = Resource.getTopPosts()
+            render view:'index',model: [resources1:resources1,recentShares:recentShares]
           //  render "Failure Login"
         }
     }
@@ -25,16 +28,9 @@ class LoginController {
             flash.message = "User not Found.."
             render flash.message
         }
-
-
-        List ids = []
-        List results = Resource.topPost()
-        results.each {
-            ids.add(it[0])
-        }
-        List<Resource> resources = Resource.getAll(ids)
-
-        render "${resources}"
+//
+//        List<Resource> resources1 = Resource.getTopPosts()
+//        render view:'index',model: [resources1:resources1]
     }
 
     def logout() {

@@ -11,6 +11,7 @@ class Topic {
     Date lastUpdated;
     Date dateCreated;
     static hasMany = [subscriptions: Subscription,resources:Resource]
+    static transients = ['subscribedUsers']
     static constraints = {
         name(blank: false, unique: 'createdBy');
         visibility(inlist: L_Visibility.values() as List);
@@ -26,11 +27,12 @@ class Topic {
             Subscription subscription = new Subscription(topic: this, user: this, seriousness: Seriousness.VERY_SERIOUS)
             if (subscription.validate()) {
                 subscription.save()
+
             }
         }
     }
 
-    static List getTrendingTopics(){
+    static List<TopicVo> getTrendingTopics(){
 
         List results = Topic.createCriteria().list([max:5]){
             eq('visibility',L_Visibility.PUBLIC)
@@ -45,12 +47,39 @@ class Topic {
             order('name','desc')
 
         }
-        results
+        List<TopicVo> topicVos = []
+        results.each { result ->
+            topicVos.add(new TopicVo(id: result[0] as Long, name: result[2], visibility: L_Visibility.PUBLIC, createdBy: result[3] as User, count: result[1] as Integer))
+        }
+       topicVos
+
     }
 
     static List getTopicsOfUser(User user){
      List<Topic> topicList =Topic.findAllByCreatedBy(user)
      List topicNames = topicList.collect{it.name}
      return topicNames
+    }
+
+    List getRecenrShares(){
+        List list=Subscription.createCriteria().list(){
+            createAlias('topic','t')
+
+            projections{
+                distinct('t.name')
+
+            }
+        }
+    list
+    }
+
+    List getSubscribedUsers(){
+        List list=Subscription.createCriteria().list(){
+            eq('topic',this)
+            projections{
+                property('user')
+            }
+        }
+        list
     }
 }

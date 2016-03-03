@@ -59,7 +59,8 @@ grails {
     }
 }
 
-
+grails.plugin.console.baseUrl="/LinkSharing/console"
+grails.plugin.console.enabled = true
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -88,6 +89,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.serverURL = "http://localhost:8080/LinkSharing/"
     }
     production {
         grails.logging.jul.usebridge = false
