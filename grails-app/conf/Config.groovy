@@ -59,7 +59,7 @@ grails {
     }
 }
 
-grails.plugin.console.baseUrl="/LinkSharing/console"
+grails.plugin.console.baseUrl="/console"
 grails.plugin.console.enabled = true
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
@@ -89,7 +89,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
-        grails.serverURL = "http://localhost:8080/LinkSharing/"
+        grails.serverURL = "http://localhost:8080"
     }
     production {
         grails.logging.jul.usebridge = false
@@ -99,7 +99,24 @@ environments {
 
 grails.sampleVariable = "someValue"		
 		grails.config.locations = ["file:${userHome}/.grails/config.groovy"]
-		
+
+
+
+grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "ayush.tyagi@tothenew.com"
+        password = "anamikatt"
+        props = ["mail.smtp.auth":"true",
+                 "mail.smtp.socketFactory.port":"465",
+                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                 "mail.smtp.socketFactory.fallback":"false"]
+    }
+}
+
+
+
 
 
 // log4j configuration

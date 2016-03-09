@@ -60,7 +60,24 @@ abstract class Resource {
         resources
     }
 
+    static String isLinkResourceOrDocResource(Long id){
+      Resource resource = Resource.get(id)
+        if(resource.instanceOf(LinkResource)){
+            return "LinkResource"
+        }else if(resource.instanceOf(DocumentResource)){
+            return "DocumentResource"
+        }
+        return "Not Found"
+    }
 
+    Boolean canViewBy(Long id){
+      Resource resource = Resource.get(id)
+        if(resource.topic.canViewedBy(topic.id)){
+        true
+        }else{
+            false
+        }
+    }
 }
 
 

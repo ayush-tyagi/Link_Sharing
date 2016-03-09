@@ -43,19 +43,42 @@ class User {
     }
 
     String toString() {
-        return "${userName}"
+        return "${firstName}"
     }
 
-    String getName() {
+    String getUserName() {
         [this.firstName, this.lastName].join(' ')
     }
 
-     static List getSubscribedTopics(User user){
-        def list=Subscription.createCriteria().list(){
-            'projections'{
-                property('topic')
-            }
-            eq('user',user)
+     static List<Topic> getSubscribedTopics(User user){
+         List<Topic> list = Subscription.createCriteria().list(){
+             projections{
+                 distinct('topic')
+             }
+             eq('user',user)
+         }
+         list
+     }
+     Boolean canDeleteResource(Long id){
+      Resource resource = Resource.get(id)
+      if(resource.createdBy==this || this?.isAdmin ){
+        true
+      }else{
+          false
+      }
+     }
+
+    int getScore(Long id){
+        Resource resource = Resource.get(id)
+        ResourceRating resourceRating = ResourceRating.findByResourceAndUser(resource,this)
+        int score = resourceRating.score
+        return score
+    }
+    Boolean isSubscribe(Long topicId){
+     Subscription subscription = Subscription.findByTopicAndUser(Topic.get(topicId),this)
+        if(subscription){
+            return true
         }
+       return false
     }
 }

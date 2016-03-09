@@ -1,23 +1,23 @@
 <div class="panel panel-default" style="border:3px solid black;border-radius:8px">
     <div class="panel-heading" style="border-bottom:3px solid black;">User Posts
-    <g:select class="btn dropdown-toggle" data-toggle="dropdown"  noSelection="['':'Search']"  name="topicName" id="doctopic" optionKey="id" style="width:200px;float:right;padding: 0px;" from="${subscribedTopics}"/>
+    <g:select class="btn dropdown-toggle" data-toggle="dropdown"  noSelection="['':'Search']"  name="topicName" id="sdsdh" optionKey="${id}" style="width:200px;float:right;padding: 0px;" from="${subscribedTopics}"/>
     </div>
 
     <div class="panel-body">
 
         <div class="col-xs-2">
-            <span class="glyphicon glyphicon-user" style="font-size:60px;border:solid black;"></span>
+            <span class="glyphicon glyphicon-user" style="font-size:60px;border:solid lightgrey;color: #366EE0;"></span>
         </div>
 
         <div class="col-xs-10">Uday Pratap Singh<span class="text-muted">@Uday 5mins</span><span class="pull-right"><a
                 href="#">Grails</a></span>
 
             <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-            "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</br></p>
+            "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."<br></p>
 
             <div class="col-xs-2"><i class="fa fa-facebook-official"></i>
                 <i class="fa fa-tumblr"></i>
-                <i class="fa fa-google-plus"></i></div>
+   0             <i class="fa fa-google-plus"></i></div>
 
             <div class="col-xs-2"><a href="#" style="text-decoration:underline;font-size:10px">Download</a></div>
 

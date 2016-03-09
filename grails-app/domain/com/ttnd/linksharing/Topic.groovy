@@ -55,10 +55,10 @@ class Topic {
 
     }
 
-    static List getTopicsOfUser(User user){
+    static List<Topic> getTopicsOfUser(User user){
      List<Topic> topicList =Topic.findAllByCreatedBy(user)
-     List topicNames = topicList.collect{it.name}
-     return topicNames
+//     List topicNames = topicList.collect{it.name}
+     return topicList
     }
 
     List getRecenrShares(){
@@ -73,13 +73,33 @@ class Topic {
     list
     }
 
-    List getSubscribedUsers(){
+    List<User> getSubscribedUsers(){
         List list=Subscription.createCriteria().list(){
             eq('topic',this)
             projections{
-                property('user')
+                createAlias('user','u')
+                property('u.userName')
             }
         }
         list
+    }
+
+    Boolean isPublic(Long id){
+        Topic topic = Topic.get(id)
+        if(topic.visibility == L_Visibility.PUBLIC){
+            true
+        }else{
+            false
+        }
+    }
+
+    Boolean canViewedBy(Long id){
+        Topic topic = Topic.get(id)
+        List<User> user = topic.subscribedUsers
+        if(topic.isPublic(id) || user?.isAdmin || this.contains(user) ){
+          true
+        }else{
+            false
+        }
     }
 }

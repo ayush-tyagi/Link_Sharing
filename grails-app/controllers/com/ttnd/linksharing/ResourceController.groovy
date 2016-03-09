@@ -15,6 +15,7 @@ class ResourceController {
             try {
                 resource.delete(flush: true)
                 render "Successful Deletion"
+                render view: '/user/index'
             }
             catch (Exception e) {
                 render "Unsuccessful"
@@ -29,22 +30,25 @@ class ResourceController {
             co.visibility = L_Visibility.PUBLIC
             List<Resource> resources = Resource.search(co).list()
             render resources
+        }else{
+            flash.error = "Search Criteria not given"
         }
     }
 
     def show(Long id) {
         println "____>>>>>>>>>>>${id}"
         Resource resource = Resource.get(id)
-        if (resource) {
-            RatingInfoVo ratingInfoVo = resource.getRatingInfoVo()
-            render "${ratingInfoVo}"
+        if (resource.canViewBy(id)) {
+//            RatingInfoVo ratingInfoVo = resource.getRatingInfoVo()
+//            render "${ratingInfoVo}"
+            render view:'/resource/resourceShow'
         } else {
             flash.error = "Resource not found"
             redirect(uri: '/')
         }
 
-        List<TopicVo> list = Topic.getTrendingTopics()
-        render view: '/topic/trendingTopics'
+//        List<TopicVo> list = Topic.getTrendingTopics()
+//        render view: '/topic/trendingTopics'
         //render list*.properties
     }
 
@@ -75,4 +79,5 @@ class ResourceController {
 //            render "Unsuccessful"
 //        }
 //    }
+
 }

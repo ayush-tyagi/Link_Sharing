@@ -27,7 +27,8 @@
         <div class="col-xs-2 "></div><label class="col-xs-2">Topic:</label>
 
         <div class="col-xs-8">
-            <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName" id="doctopic" style="width:200px; " from="${subscribedTopics}"/>
+            <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName"
+                      id="doctopic" style="width:200px; " from="${subscribedTopics}"/>
 
         </div>
     </div>
@@ -37,7 +38,7 @@
         <div class="col-xs-4"></div>
 
         <div class="col-xs-4">
-            <g:submitButton type="submit" name="submit" formaction="/LinkSharing/resource/saveLinkResource"
+            <g:submitButton type="submit" name="submit" formaction="/resource/saveLinkResource"
                             class="form-control btn btn-default active" id="submit" placeholder="Share"
                             style="color:black;border:solid black;border-radius:7px"/>
         </div>

@@ -9,11 +9,23 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title></title>
+    <title>DashBoard</title>
+    <script>
+        var msg = "${flash.message}" ? "${flash.message}" :"${flash.error}";
+        if (msg != undefined && msg != "") {
+            alert(msg);
+        }
+    </script>
 </head>
 
 <body>
+<div class="col-xs-5">
+    <g:render template="/subscription/subscriptions" model="[subscribedTopics:subscribedTopics]"/>
+    <my:trendingTopics/>
+</div>
 
-<g:render template="/topic/trendingTopics"/>
+<div class="col-xs-7">
+    <g:render template="/readingItem/inbox" model="[readingItems: readingItems]"/>
+</div>
 </body>
 </html>

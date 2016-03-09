@@ -4,9 +4,6 @@ package com.ttnd.linksharing
 import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
-import enums.Seriousness
-import org.omg.CORBA.TRANSACTION_MODE
-
 
 class TopicController {
 
@@ -57,5 +54,14 @@ class TopicController {
     def show1(){
         List<TopicVo> list = Topic.getTrendingTopics()
         render "${list}"
+    }
+
+    def userPost(Long id){
+//        println "----------*******************${id}"
+        User user = session.user
+        Resource resource = Resource.findById(id)
+        int score = user.getScore(resource.id)
+        println "-+-+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_${resource}"
+        render view:'/resource/resourceShow',model: [resource:resource,score:score]
     }
 }

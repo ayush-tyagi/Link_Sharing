@@ -42,7 +42,7 @@ scoped variable is the type of the exception thrown.
 
   <tag>
     <description>
-	Simple conditional tag that establishes a context for
+	SimpleBean conditional tag that establishes a context for
 	mutually exclusive conditional operations, marked by
 	&lt;when&gt; and &lt;otherwise&gt;
     </description>
@@ -53,7 +53,7 @@ scoped variable is the type of the exception thrown.
 
   <tag>
     <description>
-	Simple conditional tag, which evalutes its body if the
+	SimpleBean conditional tag, which evalutes its body if the
 	supplied condition is true and optionally exposes a Boolean
 	scripting variable representing the evaluation of this condition
     </description>

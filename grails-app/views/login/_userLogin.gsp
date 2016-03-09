@@ -4,12 +4,12 @@
     </div>
 
     <div class="panel-body">
-        <form class="form-horizontal">
+        <g:form class="form-horizontal" controller="login" action="loginHandler">
             <div class="form-group">
-                <label class="control-label col-xs-4" >Username:</label>
+                <label class="control-label col-xs-4" >First Name:</label>
 
                 <div class="col-xs-8">
-                    <g:textField class="form-control" name="userName"/>
+                    <g:textField class="form-control" placeholder="First Name" name="userName"/>
                 </div>
             </div>
 
@@ -28,11 +28,10 @@
 
                 <div class="col-xs-6">
                     <g:submitButton class="form-control btn btn-default active" name="submit" value="Login"
-                                    formaction="/LinkSharing/login/loginHandler"
                                     style="color:black;border:solid black;border-radius:7px"/>
                 </div>
             </div>
 
-        </form>
+        </g:form>
     </div>
 </div>

@@ -1,6 +1,21 @@
 package com.ttnd.linksharing
 
 class UtilController {
+        def utilService
+        def simpleBean
+        def simpleBeanUsingConstructor
+
+    def saveUser(){
+        render "=====================>called"
+        if(utilService.firstService()){
+            println "-------------------------------------///\\>>>Saved"
+        }
+    }
+
+    def show(){
+        render "^^^^^^^^^^^^^^^^^^^^^^^^^.>>>>>>>>>>>>>>>>>>${simpleBeanUsingConstructor.properties}"
+    }
+
 
     def index() {
         List list = User.list()

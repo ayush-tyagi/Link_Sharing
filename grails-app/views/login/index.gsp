@@ -26,7 +26,8 @@
 <div class="container">
     <div class="col-xs-7">
         <g:render template="/topic/recentShare" model="[recentShares: recentShares]"/>
-        <g:render template="/readingItem/topPosts" model="[resources1: resources1]"/>
+        <my:topPosts/>
+        <my:trendingTopics/>
     </div>
 
     <div class="col-xs-5">
