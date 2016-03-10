@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 class LoginController {
     def mailService
+
     def index() {
         User user = session.user
         if (user) {
@@ -10,7 +11,7 @@ class LoginController {
         } else {
             List recentShares = Topic.list([sort: 'dateCreated', order: 'desc', max: 2, offset: 0])
 //            List<Resource> resources1 = Resource.getTopPosts()
-            render view: 'index', model: [recentShares: recentShares]
+            render view: 'index', model: [recentShares: recentShares,user:flash.user, params : params]
             //  render "Failure Login"
         }
     }

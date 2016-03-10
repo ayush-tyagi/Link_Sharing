@@ -115,9 +115,9 @@ grails {
     }
 }
 
+grails.app.context = "/"
 
-
-
+linksharing.documents.folderPath = "${userHome}/var/www/linksharing"
 
 // log4j configuration
 log4j.main = {

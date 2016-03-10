@@ -44,7 +44,8 @@ class FirstTagLib {
         if (Resource.isLinkResourceOrDocResource(attrs.id) == "LinkResource") {
             out << "<a href='www.google.com' target=\"_blank\" style=\"text-decoration:underline;font-size:13px\"> Link </a>"
         } else if (Resource.isLinkResourceOrDocResource(attrs.id) == "DocumentResource") {
-            out << "<a href='#' style=\"text-decoration:underline;font-size:13px\"> Download </a>"
+            String ref = createLink(controller: 'documentResource', action: 'download',params: [id:attrs.id])
+            out << "<a href=${ref} > Download </a>"
         } else {
             out << "<h6 style=\"text-decoration:underline;font-size:13px\">Not Found<h6>"
         }
@@ -103,6 +104,15 @@ class FirstTagLib {
         User user = session.user
         int count = Topic.countByCreatedBy(user)
         out << count
+    }
+
+    def userImage ={ attrs, body ->
+        Long userId = attrs.userId
+        def height = attrs.height
+        def width = attrs.width
+        def tagClass = attrs.class
+        out<<"<img src='${createLink(controller: 'user',action: 'image',params: [id:userId])}' "+"class='${tagClass}' " +
+                "height='${height}' width='${width}' />"
     }
 }
 

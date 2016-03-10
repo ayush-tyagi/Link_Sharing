@@ -5,15 +5,13 @@
         </div>
     </div>
 
-
-
-
     <div class="panel panel-default" >
 
         <div class="panel-body">
 
             <div class="col-xs-2">
-                <span class="glyphicon glyphicon-user" style="font-size:60px;border:solid lightgrey;color: #366EE0;"></span>
+                <my:userImage userId="${topic.createdBy.id}" width="64px" height="64px"
+                              class="img img-responsive img-thumbnail"/>
             </div>
 
             <div class="col-xs-10">${topic.name}<span class="text-muted"><br>@Uday<br>

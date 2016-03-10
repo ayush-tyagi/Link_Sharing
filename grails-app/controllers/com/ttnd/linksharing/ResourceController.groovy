@@ -1,8 +1,7 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.co.LinkResourceCo
 import com.ttnd.linksharing.co.ResourceSearchCo
-import com.ttnd.linksharing.com.ttnd.linksharing.vo.RatingInfoVo
-import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 
 class ResourceController {
@@ -11,37 +10,38 @@ class ResourceController {
 
     def delete(Long id) {
         Resource resource = Resource.load(id)
-        if (resource) {
+        User user = session.user
+        if (user.canDeleteResource(id)) {
             try {
-                resource.delete(flush: true)
-                render "Successful Deletion"
-                render view: '/user/index'
+                resource.deleteFile()
+                flash.message = "File deleted"
             }
             catch (Exception e) {
-                render "Unsuccessful"
+                flash.error = "File can\'t deleted"
             }
         } else {
-            render "Not Found"
+            flash.error = "User is not priviliged to delete this resource"
         }
+        redirect(controller: 'user', action: 'index')
     }
 
     def search(ResourceSearchCo co) {
-        if(co.q) {
+        if (co.q) {
             co.visibility = L_Visibility.PUBLIC
             List<Resource> resources = Resource.search(co).list()
             render resources
-        }else{
+        } else {
             flash.error = "Search Criteria not given"
         }
     }
 
     def show(Long id) {
-        println "____>>>>>>>>>>>${id}"
         Resource resource = Resource.get(id)
-        if (resource.canViewBy(id)) {
+        User user = session.user
+        if (resource.canViewBy(user)) {
 //            RatingInfoVo ratingInfoVo = resource.getRatingInfoVo()
 //            render "${ratingInfoVo}"
-            render view:'/resource/resourceShow'
+            render(view: '/resource/resourceShow', model: [resource: resource])
         } else {
             flash.error = "Resource not found"
             redirect(uri: '/')
@@ -52,23 +52,25 @@ class ResourceController {
         //render list*.properties
     }
 
-    def saveLinkResource(String description, String topicName, String link) {
-        println "==========>${params}"
-        User user= session.user
-        Topic topic = Topic.findByNameAndCreatedBy(topicName,user)
-        println "---------------->${topic}"
-        Resource linkResource = new LinkResource(description: description,topic: topic,createdBy: user,url: link)
-        println "=============================>>>>>${linkResource}"
-        if (linkResource.validate()) {
-            linkResource.save(flush: true)
-            render "Successful Save"
-        } else {
-            render "Unsuccessful"
+    protected void pushReadingItems(Resource resource) {
+        Topic topic = resource.topic
+        println " "
+        println "..............Topic..................>${topic}"
+        List<User> users = topic.getSubscribedUsers()
+
+        users.each { User user ->
+            if (resource.createdBy != user) {
+                println "...............Users.................>${users}"
+                ReadingItem item = new ReadingItem(resource: resource, user: user, isRead: false).save(flush: true, failOnError: true)
+                /*user.addToReadingItems(item)
+                user.save(flush: true, failOnError: true)
+                resource.addToReadingItems(item)*/
+            }
         }
+//        resource.save(flush: true, failOnError: true)
     }
 
-
-//    def saveDocumentResource(String description, String topicName, String filePath) {
+// def saveDocumentResource(String description, String topicName, String filePath) {
 //        User user= session.user
 //        Topic topic= Topic.findByNameAndCreatedBy(topicName,user)
 //        DocumentResource documentResource = new DocumentResource(description: description, topic: topic, filePath: filePath)
@@ -80,4 +82,18 @@ class ResourceController {
 //        }
 //    }
 
+    /*def save(LinkResourceCo linkResourceCo) {
+        User user= session.user
+        Topic topic = Topic.findByNameAndCreatedBy(linkResourceCo.topicName,user)
+        Resource linkResource = new LinkResource(description: linkResourceCo.description,
+                topic: topic,createdBy: user,url: linkResourceCo.link)
+        if (linkResource.validate()) {
+            linkResource.save(flush: true)
+            render "Successful Save"
+        } else {
+
+            render linkResource.errors
+        }
+    }
+*/
 }

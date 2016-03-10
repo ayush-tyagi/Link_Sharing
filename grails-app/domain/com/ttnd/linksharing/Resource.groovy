@@ -7,11 +7,11 @@ import enums.L_Visibility
 import org.hibernate.criterion.CriteriaSpecification
 
 abstract class Resource {
-    String description;
-    User createdBy;
-    Topic topic;
-    Date lastUpdated;
-    Date dateCreated;
+    String description
+    User createdBy
+    Topic topic
+    Date lastUpdated
+    Date dateCreated
     static hasMany = [readingItems: ReadingItem, resourceRatings: ResourceRating]
     static belongsTo = [topic: Topic]
     static transients = ['ratingInfoVo']
@@ -70,13 +70,24 @@ abstract class Resource {
         return "Not Found"
     }
 
-    Boolean canViewBy(Long id){
+   /* Boolean canViewBy(User user){
       Resource resource = Resource.get(id)
         if(resource.topic.canViewedBy(topic.id)){
         true
         }else{
             false
         }
+    }*/
+     Boolean canViewBy(User user) {
+        if (this.topic.canViewedBy(user)){
+            return true
+        }
+         return false
+    }
+
+
+    def deleteFile(){
+        log.info("Will be implemented in subClass")
     }
 }
 

@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import enums.Seriousness
+import grails.converters.JSON
 
 class SubscriptionController {
 
@@ -12,11 +13,13 @@ class SubscriptionController {
         Subscription subscription = new Subscription(topic: topic, user: user)
         if (subscription.validate()) {
             subscription.save(flush: true)
-            flash.message = "Saved successfully"
-            redirect(controller: "user",action: "index")
+//            flash.message = "Saved successfully"
+                  render([message :"Saved successfull"] as JSON)
+// redirect(controller: "user",action: "index")
         }else{
             flash.error = "Unsuccessful to save"
-            render "${subscription.errors.allErrors}"
+//            render "${subscription.errors.allErrors}"
+            render([error :"Saved Unsuccessfull"] as JSON)
         }
     }
 
@@ -42,11 +45,13 @@ class SubscriptionController {
         Subscription subscription = Subscription.findByTopicAndUser(topic,user)
         if (subscription) {
             subscription.delete(flush: true)
-            flash.message ="Deleted Successfully"
-            redirect(controller: "user" ,action:"index" )
+//            flash.message ="Deleted Successfully"
+//            redirect(controller: "user" ,action:"index" )
+            render([message :"Delete successfull"] as JSON)
         } else {
-            flash.error = "Not Deleted"
-            render "User not Found  "
+//            flash.error = "Not Deleted"
+//            render "User not Found  "
+            render([message :"Cannot be deleted"] as JSON)
         }
     }
 }

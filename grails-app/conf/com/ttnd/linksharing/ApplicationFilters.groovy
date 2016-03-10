@@ -13,7 +13,7 @@ class ApplicationFilters {
 //            afterView = { Exception e ->
 //
 //            }
-            true
+//            true
 //        }
 //
 //        loginCheck(controller: '*', controllerExclude: 'login') {
@@ -28,7 +28,7 @@ class ApplicationFilters {
 //            true
 //        }
 
-        sessionCheck(controller: '', action: '') {
+        sessionCheck(controller: '*', action: '*') {
             before = {
 
             }

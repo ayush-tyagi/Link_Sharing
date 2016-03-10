@@ -9,16 +9,16 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title></title>
+    <title>Topic Show</title>
 </head>
 
 <body>
 <div class="col-xs-5">
-    <g:render template="/topic/showPost" model="[topic:topic]"/>
-    <g:render template="/topic/showPost2" model="[subscribedUsers:subscribedUsers]"/>
+    <g:render template="/topic/showPostTopic" model="[topic:topic]"/>
+    <g:render template="/topic/showPostSubscription" model="[subscribedUsers:subscribedUsers]"/>
 </div>
 <div class="col-xs-7">
-    <g:render template="/topic/showPost3" model="[subscribedTopics:subscribedTopics]"/>
+    <g:render template="/topic/showPostUserPost" model="[subscribedTopics:subscribedTopics]"/>
     <my:trendingTopics/>
     <my:topPosts/>
 </div>

@@ -7,7 +7,8 @@
             </div>
             <div class="modal-body">
 
-                <form class="form-horizontal">
+                <g:form class="form-horizontal" controller="linkResource" action="save"
+                        params="[subscribedTopics:subscribedTopics]">
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" >Link:</label>
@@ -28,7 +29,7 @@
 
         <div class="col-xs-8">
             <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName"
-                      id="doctopic" style="width:200px; " from="${subscribedTopics}"/>
+                      id="doctopic" style="width:200px; " from="${subscribedTopics*.name}"/>
 
         </div>
     </div>
@@ -38,7 +39,7 @@
         <div class="col-xs-4"></div>
 
         <div class="col-xs-4">
-            <g:submitButton type="submit" name="submit" formaction="/resource/saveLinkResource"
+            <g:submitButton type="submit" name="submit"
                             class="form-control btn btn-default active" id="submit" placeholder="Share"
                             style="color:black;border:solid black;border-radius:7px"/>
         </div>
@@ -49,7 +50,7 @@
         </div>
     </div>
 
-    </form>
+    </g:form>
 </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

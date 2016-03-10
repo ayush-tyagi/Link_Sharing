@@ -15,7 +15,7 @@ class TopicController {
         if(topic){
             if(topic.visibility== L_Visibility.PUBLIC){
                 User user = session.user
-                List subscribedTopics = User.getSubscribedTopics(user)
+                List<Topic> subscribedTopics = User.getSubscribedTopics(user)
                 render(view: "topicShow",model: [subscribedUsers:topic.subscribedUsers,topic:topic,subscribedTopics:subscribedTopics])
             }else if(topic.visibility== L_Visibility.PRIVATE){
                 User user = session.user
@@ -61,7 +61,7 @@ class TopicController {
         User user = session.user
         Resource resource = Resource.findById(id)
         int score = user.getScore(resource.id)
-        println "-+-+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_${resource}"
+        println "-+-+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_${resource.properties}"
         render view:'/resource/resourceShow',model: [resource:resource,score:score]
     }
 }

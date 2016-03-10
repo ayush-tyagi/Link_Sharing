@@ -1,9 +1,9 @@
 package com.ttnd.linksharing
 
 import com.ttnd.linksharing.co.UserCo
-import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 
 class UserController {
+    def assetResourceLocator
 
     def index() {
         User user = session.user
@@ -13,21 +13,43 @@ class UserController {
 //        List<TopicVo> trendingTopics = Topic.getTrendingTopics()
 
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
-        List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "isRead", order: "asc"])
-        render(view: 'index', model: [readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
+        List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "dateCreated", order: "desc"])
+        render(view: 'dashboard', model: [readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
     }
 
     def register(UserCo userCo) {
-        User user = new User(email_id: userCo.email_Id, userName:userCo.userName , firstName: userCo.firstName, lastName: userCo.lastName, password: userCo.password, confirmPassword: userCo.confirmPassword)
-        if (user.validate()) {
-            user.save()
-            flash.message = "Successful registration"
-            render flash.message
-        } else if (user.hasErrors()) {
-            flash.message = "${user} not added--- ${user.errors.allErrors}"
-            render "${user.errors.allErrors.collect { message(error: it) }.join(',')}"
+        User user = User.findByUserNameOrEmail_id(userCo.userName, userCo.email_id)
+        if (!user) {
+            user = userCo.properties
+            if (!params.photo.empty) {
+                user.photo = params.photo.bytes
+            }
+            user.isActive = true
+            if (user.validate()) {
+                user.save(flush: true)
+                flash.message = "Success"
+                forward(controller: 'login', action: 'loginHandler', params: [userName: user.userName, password: user.password])
+            } else {
+                flash.error = "Not saved"
+            }
+        } else {
+            flash.error = "User Already exists"
         }
+        if (user.hasErrors()) {
+            flash.user = user
+            log.info(user.errors.allErrors)
+        }
+        redirect(controller: 'login', action: 'index',model:[userCo:userCo])
     }
 
-
+    def image(Long id) {
+        User user = User.get(id)
+        if (user?.photo) {
+            Byte[] img = user.photo
+            response.outputStream.write(img)
+        } else {
+            response.outputStream << assetResourceLocator.findAssetForURI('girl1.png').getInputStream()
+        }
+        response.outputStream.flush()
+    }
 }

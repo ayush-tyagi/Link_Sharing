@@ -97,7 +97,7 @@ class BootStrap {
             if (!Resource.countByTopic(topic)) {
                 2.times
                         {
-                            Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
+                            Resource documentResource = new DocumentResource(contentType:Constants.DOCUMENT_CONTENT_TYPE , description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
                             Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "http://www.someurl.com")
 
                             if (documentResource.validate() && linkResource.validate()) {

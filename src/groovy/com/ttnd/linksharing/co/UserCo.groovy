@@ -1,13 +1,37 @@
 package com.ttnd.linksharing.co
 
-/**
- * Created by ayush on 4/3/16.
- */
+import grails.validation.Validateable
+
+@Validateable
 class UserCo {
     String firstName
     String lastName
     String userName
     String password
     String confirmPassword
-    String email_Id
+    String email_id
+    def photo
+
+    static constraints = {
+
+
+        email_id(unique: true, blank: false, email: true)
+        password(blank: false, minSize: 5)
+        firstName(blank: false)
+        lastName(blank: false)
+        userName (blank:false , unique:true)
+       /* confirmPassword(nullable: true, blank: true, validator: { confirmPassword, obj ->
+            Long id = 0
+            id = obj.getId()
+            //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
+            if (!obj.id && obj.password != confirmPassword) {
+                "password.mismatch.confirmPassword"
+            }
+        })
+*/   confirmPassword(bindable: true, nullable: true, blank: true, validator: { val, obj ->
+            if (obj.password != val || !val || !obj.password) {
+                return 'password.do.not.match.confirm.password'
+            }
+        })
+    }
 }

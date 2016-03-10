@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container-fluid">
     <div class="col-xs-7">
         <g:render template="/topic/recentShare" model="[recentShares: recentShares]"/>
         <my:topPosts/>
@@ -32,7 +32,7 @@
 
     <div class="col-xs-5">
         <g:render template="/login/userLogin"/>
-        <g:render template="/user/userRegister"/>
+        <g:render template="/user/userRegister" model="[user: user]"/>
     </div>
 </div>
 </body>
