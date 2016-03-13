@@ -1,9 +1,15 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.co.TopicSearchCo
 import com.ttnd.linksharing.co.UserCo
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
+import enums.L_Visibility
 
 class UserController {
     def assetResourceLocator
+    def topicService
+    def subscriptionService
+
 
     def index() {
         User user = session.user
@@ -15,7 +21,7 @@ class UserController {
         println "----------------->>>>${numberOfSubscription}"
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
         List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "dateCreated", order: "desc"])
-        render(view: 'dashboard', model: [numberOfSubscription:numberOfSubscription,user: user, readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
+        render(view: 'dashboard', model: [numberOfSubscription: numberOfSubscription, user: user, readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
     }
 
     def register(UserCo userCo) {
@@ -41,7 +47,7 @@ class UserController {
             flash.user = user
             log.info(user.errors.allErrors)
         }
-        redirect(controller: 'login', action: 'index',model:[userCo:userCo])
+        redirect(controller: 'login', action: 'index', model: [userCo: userCo])
     }
 
     def image(Long id) {
@@ -55,10 +61,46 @@ class UserController {
         response.outputStream.flush()
     }
 
-    def profile(){
-         User user = session.user
+    def profile() {
+        User user = session.user
         int numberOfSubscription = Subscription.countByUser(user)
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
-        render(view: 'profile',model: [numberOfSubscription:numberOfSubscription,user:user,subscribedTopics:subscribedTopics])
+        render(view: 'profile', model: [numberOfSubscription: numberOfSubscription, user: user, subscribedTopics: subscribedTopics])
     }
+
+
+    def topics(Long id) {
+
+        TopicSearchCo topicSearchCo = new TopicSearchCo(id: id)
+
+        if (session.user) {
+            if (!(session.user.isAdmin || session.user.equals(User.load(id)))) {
+                topicSearchCo.visibility = L_Visibility.PUBLIC
+            }
+        } else
+            topicSearchCo.visibility = L_Visibility.PUBLIC
+
+        List<TopicVo> createdTopics = topicService.search(topicSearchCo)
+
+        render(template: '/topic/list', model: [topics: createdTopics])
+    }
+
+
+    def subscriptions(Long id) {
+
+        TopicSearchCo topicSearchCo = new TopicSearchCo(id: id)
+
+        if (session.user) {
+            if (!(session.user.isAdmin || session.user.equals(User.load(id)))) {
+                topicSearchCo.visibility = L_Visibility.PUBLIC
+            }
+        } else
+            topicSearchCo.visibility = L_Visibility.PUBLIC
+
+        List<TopicVo> subscribedTopics = subscriptionService.search(topicSearchCo)
+
+        render(template: '/topic/list', model: [topics: subscribedTopics])
+
+    }
+
 }

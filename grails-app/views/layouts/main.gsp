@@ -92,7 +92,7 @@
                                     <li><a href="${createLink(controller: 'user',action: 'profile')}">Profile</a></li>
                            <g:if test="${session.user}">
                                     <li><a href="#">Users</a></li>
-                                    <li><a href="#">Topic</a></li>
+                                    <li><a href="${createLink(controller: 'user',action: 'topics')}">Topic</a></li>
                                     <li><a href="#">Post</a></li>
                                     <li><a href="/login/logout">Logout</a></li></g:if>
                                 </ul>
