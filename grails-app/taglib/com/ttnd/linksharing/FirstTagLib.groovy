@@ -136,5 +136,14 @@ class FirstTagLib {
         out << render(template: '/subscription/normalVisibility',
                 model: [visibility:visibility,topicId: attrs.topicId])
     }
+
+    def activateDeacivate = { attrs,body ->
+        User user = User.get(attrs.id)
+        if(user.isActive){
+            out<<"<g:link name=\"active\" data-id=\"${attrs.id}\" onclick=\"deactivateUser(${user.id});\">Deactivate</g:link>"
+        }else{
+            out<<"<g:link name=\"deactive\" data-id=\"${attrs.id}\" onclick=\"activateUser(${user.id});\">Activate</g:link>"
+        }
+    }
 }
 

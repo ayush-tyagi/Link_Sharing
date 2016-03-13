@@ -44,6 +44,31 @@ function unsubscribe(topicId) {
 
 }
 
+function deactivateUser(id){
+    event.preventDefault();
+    $.ajax({
+        url:'/user/changeToDeactive',
+        data:{id:id},
+        method:'post',
+        success:function(data){
+            //$(".myUser").html(data);
+            alert(data.message)
+        }
+    })
+}
+
+function activateUser(id){
+    event.preventDefault();
+    $.ajax({
+        url:'/user/changeToActive',
+        data:{id:id},
+        method:'post',
+        success:function(data){
+            alert(data.message)
+        }
+    })
+}
+
 
 function subscribe(topicId) {
     event.preventDefault();

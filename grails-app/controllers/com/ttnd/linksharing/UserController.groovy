@@ -1,9 +1,12 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.co.TopicSearchCo
 import com.ttnd.linksharing.co.UserCo
+import com.ttnd.linksharing.com.ttnd.linksharing.vo.PostVo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
+import grails.converters.JSON
 
 class UserController {
     def assetResourceLocator
@@ -18,7 +21,7 @@ class UserController {
         List<Topic> topicNames = Topic.getTopicsOfUser(user)
 //        List<TopicVo> trendingTopics = Topic.getTrendingTopics()
         int numberOfSubscription = Subscription.countByUser(user)
-        println "----------------->>>>${numberOfSubscription}"
+//        println "----------------->>>>${numberOfSubscription}"
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
         List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "dateCreated", order: "desc"])
         render(view: 'dashboard', model: [numberOfSubscription: numberOfSubscription, user: user, readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
@@ -103,4 +106,34 @@ class UserController {
 
     }
 
+    def admin() {
+        if (session.user.isAdmin) {
+            List<User> users = User.list([max: 20, sort: 'id', order: 'asc', offset: 0])
+            render(view: '/user/UserListForAdmin', model: [users: users])
+        }else{
+            redirect(action: 'index')
+        }
+    }
+
+    def changeToDeactive(long id){
+        User user =User.get(id)
+        if(user.isActive){
+            if(User.executeUpdate("update User as u set u.isActive=${false} where u.id=${user.id}")){
+                render([message:"${user.userName} is Deactivated Successfully"]as JSON)
+            }
+        }else{
+            render([message:"${user.userName} is not active"]as JSON)
+        }
+    }
+
+    def changeToActive(long id){
+        User user =User.get(id)
+        if(!user.isActive){
+            if(User.executeUpdate("update User as u set u.isActive=${true} where u.id=${user.id}")){
+                render([message:"${user.userName} is activated Successfully"]as JSON)
+            }
+        }else{
+            render([message:"${user.userName} is Active"]as JSON)
+        }
+    }
 }

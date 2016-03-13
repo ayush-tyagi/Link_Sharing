@@ -44,7 +44,7 @@
                         <a href="${createLink(controller: 'login',action: 'index')}" style="font-size:28px;color:  #0000ff">Link Sharing</a>
                     </div>
 
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" style="padding-top: 15px;">
                         <div class="panel" id="search-panel" style="border:orangered;">
                             <div class="glyphicon glyphicon-search" style="color: #366EE0;"></div>
 
@@ -58,18 +58,22 @@
 
                     <div class="col-xs-5">
                         <g:if test="${session.user}">
+              &nbsp; &nbsp; &nbsp; &nbsp;
                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                                     data-target="#myModal4"
                                     style="border:none;background:none;">
                                 <div class="glyphicon glyphicon-comment" style="color: #366EE0;"></div></button>
+                            &nbsp; &nbsp; &nbsp; &nbsp;
                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                                     data-target="#myModal14"
                                     style="border:none;background:none;">
                                 <div class="glyphicon glyphicon-envelope" style="color: #366EE0;"></div></button>
+                            &nbsp; &nbsp; &nbsp; &nbsp;
                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                                     data-target="#myModal2"
                                     style="border:none;background:none;">
                                 <div class="glyphicon glyphicon-paperclip" style="color: #366EE0;"></div></button>
+                            &nbsp; &nbsp; &nbsp; &nbsp;
                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                                     data-target="#myModal3"
                                     style="border:none;background:none;">
@@ -91,7 +95,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li><a href="${createLink(controller: 'user',action: 'profile')}">Profile</a></li>
                            <g:if test="${session.user}">
-                                    <li><a href="#">Users</a></li>
+                                    <li><a href="${createLink(controller: 'user',action: 'admin')}">Users</a></li>
                                     <li><a href="${createLink(controller: 'user',action: 'topics')}">Topic</a></li>
                                     <li><a href="#">Post</a></li>
                                     <li><a href="/login/logout">Logout</a></li></g:if>
