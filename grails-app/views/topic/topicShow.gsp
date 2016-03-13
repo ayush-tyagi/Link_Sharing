@@ -15,7 +15,7 @@
 <body>
 <div class="col-xs-5">
     <g:render template="/topic/showPostTopic" model="[topic:topic]"/>
-    <g:render template="/topic/showPostSubscription" model="[subscribedUsers:subscribedUsers]"/>
+    <g:render template="/subscription/subscriptions" model="[subscribedUsers:subscribedUsers]"/>
 </div>
 <div class="col-xs-7">
     <g:render template="/topic/showPostUserPost" model="[subscribedTopics:subscribedTopics]"/>

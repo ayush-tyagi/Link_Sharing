@@ -11,7 +11,7 @@ class LoginController {
         } else {
             List recentShares = Topic.list([sort: 'dateCreated', order: 'desc', max: 2, offset: 0])
 //            List<Resource> resources1 = Resource.getTopPosts()
-            render view: 'index', model: [recentShares: recentShares,user:flash.user, params : params]
+            render view: 'index', model: [recentShares: recentShares, user: flash.user, params: params]
             //  render "Failure Login"
         }
     }
@@ -44,34 +44,37 @@ class LoginController {
 
 //    def showTopics() {
 //    }
-    def forgotPassword(){
+    def forgotPassword() {
         render(view: '/login/forgotPassword')
     }
 
-    def testMail(String email,String topicName) {
+    def testMail(String email, String topicName) {
         Topic topic = Topic.findByName(topicName)
         println "----------------${topic}"
-        mailService.sendMail {
-            to "${email}"
-            from "ayush.tyagi@tothenew.com"
-            subject "Invitation request"
-            body "${topic} invitation from"
+        if (topic) {
+            mailService.sendMail {
+                to "${email}"
+                from "ayush.tyagi@tothenew.com"
+                subject "Invitation request"
+                body "You have recieved Invitation for Topic \"${topic.name}\"  from \"ayush.tyagi@tothenew.com\""
+            } render("You have successfully sent an invitation to ${email}")
+        } else {
+            render("Topic does not exists")
         }
-
     }
 
 
-    def changePassword(String password,String confirmPassword){
-     User user = session.user
-     if(password==confirmPassword){
-         user.password=password
-         if(User.executeUpdate("update User as u set u.password=:password where u.id=${user.id}",[password:password])){
-             render("Your Password is changed Successfully")
-         }else{
-             render "${user.errors.allErrors}"
-         }
-     }else{
-         render "Password does not match with confirm password"
-     }
+    def changePassword(String password, String confirmPassword) {
+        User user = session.user
+        if (password == confirmPassword) {
+            user.password = password
+            if (User.executeUpdate("update User as u set u.password=:password where u.id=${user.id}", [password: password])) {
+                render("Your Password is changed Successfully")
+            } else {
+                render "${user.errors.allErrors}"
+            }
+        } else {
+            render "Password does not match with confirm password"
+        }
     }
 }

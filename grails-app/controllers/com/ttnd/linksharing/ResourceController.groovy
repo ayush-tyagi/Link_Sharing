@@ -3,6 +3,7 @@ package com.ttnd.linksharing
 import com.ttnd.linksharing.co.LinkResourceCo
 import com.ttnd.linksharing.co.ResourceSearchCo
 import enums.L_Visibility
+import grails.converters.JSON
 
 class ResourceController {
 
@@ -50,6 +51,20 @@ class ResourceController {
 //        List<TopicVo> list = Topic.getTrendingTopics()
 //        render view: '/topic/trendingTopics'
         //render list*.properties
+    }
+
+    def changeDescription(String resourceDesc,Long id){
+        Resource resource = Resource.get(id)
+//        println "-------->>>${resource}"
+        if(resource){
+            if(Resource.executeUpdate("update Resource as r set r.description=:desc where r.id=${resource.id}",
+                    [desc:resourceDesc])){
+                render([message:"You have changed Resource Description successfully"]as JSON)
+            }
+            render([message:"You have changed Resource Description successfully"]as JSON)
+        }else{
+            render([message:"You cannot changed Resource Description"]as JSON)
+        }
     }
 
     protected void pushReadingItems(Resource resource) {

@@ -1,9 +1,8 @@
 package com.ttnd.linksharing
 
-import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.co.TopicSearchCo
+import com.ttnd.linksharing.co.UpdateCo
 import com.ttnd.linksharing.co.UserCo
-import com.ttnd.linksharing.com.ttnd.linksharing.vo.PostVo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 import grails.converters.JSON
@@ -12,6 +11,7 @@ class UserController {
     def assetResourceLocator
     def topicService
     def subscriptionService
+    def mailService
 
 
     def index() {
@@ -71,7 +71,7 @@ class UserController {
         render(view: 'profile', model: [numberOfSubscription: numberOfSubscription, user: user, subscribedTopics: subscribedTopics])
     }
 
-
+/*
     def topics(Long id) {
 
         TopicSearchCo topicSearchCo = new TopicSearchCo(id: id)
@@ -85,7 +85,7 @@ class UserController {
 
         List<TopicVo> createdTopics = topicService.search(topicSearchCo)
 
-        render(template: '/topic/list', model: [topics: createdTopics])
+        render(view: '/topic/list', model: [topics: createdTopics])
     }
 
 
@@ -104,7 +104,7 @@ class UserController {
 
         render(template: '/topic/list', model: [topics: subscribedTopics])
 
-    }
+    }*/
 
     def admin() {
         if (session.user.isAdmin) {
@@ -134,6 +134,36 @@ class UserController {
             }
         }else{
             render([message:"${user.userName} is Active"]as JSON)
+        }
+    }
+
+    def forgotPassword(String email,String userName){
+        User user = User.findByUserName(userName)
+        String password=user.password
+        if(user){
+        mailService.sendMail {
+            to "${email}"
+            from "ayush.tyagi@tothenew.com"
+            subject "Invitation request"
+            body "${userName} your password is  \"${password}\""
+        }
+            render("MAil sent to your email")
+        }else {
+            render("User does not exists")
+        }
+    }
+
+    def update(UpdateCo updateCo){
+     User user = session.user
+        if(user){
+        if(User.executeUpdate("update User as u set u.firstName=${updateCo.firstName} and u.lastName=${updateCo.lastName}" +
+                "and u.userName=${updateCo.userName} where u.id=${user.id}")){
+            render "Successful updation"
+        }    else{
+            render "OOps"
+        }
+        }else{
+            render "User not found"
         }
     }
 }

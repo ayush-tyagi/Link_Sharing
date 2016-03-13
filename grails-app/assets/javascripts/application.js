@@ -51,7 +51,7 @@ function deactivateUser(id){
         data:{id:id},
         method:'post',
         success:function(data){
-            //$(".myUser").html(data);
+            $(".myUser").html(data);
             alert(data.message)
         }
     })
@@ -155,6 +155,28 @@ function changeTopicNameByButton(id) {
     })
 }
 
+
+function unhideResourceDescription() {
+    $("#changeDescription").removeClass("hide")
+//alert("Clicked")
+}
+
+function changeResourceDescription(id){
+    var resourceDesc = $("#textDescription").val();
+    //alert(resourceDesc)
+    $.ajax({
+        url:'/resource/changeDescription',
+        data:{resourceDesc:resourceDesc,id:id},
+        method:'post',
+        success:function(data){
+            alert(data.message)
+        },
+        error:function(data){
+            alert(data.message)
+        }
+    })
+
+}
 /*
  function success1(data) {
  alert(data.message)

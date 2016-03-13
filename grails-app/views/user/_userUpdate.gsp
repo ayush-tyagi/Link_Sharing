@@ -1,6 +1,6 @@
 <div class="panel panel-primary" style="border:3px solid #0000ff;border-radius:8px">
     <div class="panel-heading" style="border-bottom:3px solid  #0000ff;">
-        Register
+        Update Details
     </div>
 
     <div class="panel-body">
@@ -74,7 +74,7 @@
                 <div class="col-xs-12"><div class="col-xs-4"></div>
 
                     <div class="col-xs-8">
-                        <g:submitButton class="form-control btn btn-primary active" name="submit" value="Register"
+                        <g:submitButton class="form-control btn btn-primary active" name="submit" value="Update"
                                         style="color:black;border:solid  #0000ff;border-radius:3px;color:whitesmoke ; "/>
                     </div>
                 </div>

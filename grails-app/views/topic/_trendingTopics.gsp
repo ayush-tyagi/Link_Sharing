@@ -4,7 +4,7 @@
             <a href="#" style="text-decoration:underline">View ALL</a></div>
     </div>
 
-    <div class="panel-body" id="subscribedTopics" style="overflow-y: auto;height: 238px">
+    <div class="panel-body" id="subscribedTopics" style="overflow-y: auto;height: 320px;">
 
         <g:each in="${trendingTopics}" var="topic">
             <div stye="overflow:scroll;color:lightgrey;">

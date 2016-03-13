@@ -26,7 +26,7 @@
             <div class="form-group">
 
                 <div class="col-xs-6">
-                    <g:submitButton class="form-control btn btn-primary active" name="submit" value="Login"
+                    <g:submitButton class="form-control btn btn-primary active" name="submit" value="Change Password"
                                     style="color:black;border:solid  #0000ff;border-radius:3px;color:#d9edf7"/>
                 </div>
             </div>

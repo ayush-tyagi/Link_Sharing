@@ -24,7 +24,7 @@
             <div class="col-xs-2"><my:isLinkOrDoc id="${item.resource.id}"/>
             </div>
 
-            <div class="col-xs-3"><a href="#" style="text-decoration:underline;font-size:10px">View full site</a>
+            <div class="col-xs-3"><a href="/" style="text-decoration:underline;font-size:10px">View full site</a>
             </div>
 
             <div class="col-xs-3">

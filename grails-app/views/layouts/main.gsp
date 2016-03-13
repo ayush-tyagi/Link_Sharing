@@ -41,7 +41,8 @@
             <div class="panel panel-default" style="background-color:lightgrey ;">
                 <div class="panel-body" style="border:3px solid  #0000ff;border-radius:5px;">
                     <div class="col-xs-4">
-                        <a href="${createLink(controller: 'login',action: 'index')}" style="font-size:28px;color:  #0000ff">Link Sharing</a>
+                        <a href="${createLink(controller: 'login', action: 'index')}"
+                           style="font-size:28px;color:  #0000ff">Link Sharing</a>
                     </div>
 
                     <div class="col-xs-3" style="padding-top: 15px;">
@@ -58,7 +59,7 @@
 
                     <div class="col-xs-5">
                         <g:if test="${session.user}">
-              &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;
                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                                     data-target="#myModal4"
                                     style="border:none;background:none;">
@@ -93,12 +94,13 @@
                                     <span class="caret" style="color: #366EE0;"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="${createLink(controller: 'user',action: 'profile')}">Profile</a></li>
-                           <g:if test="${session.user}">
-                                    <li><a href="${createLink(controller: 'user',action: 'admin')}">Users</a></li>
-                                    <li><a href="${createLink(controller: 'user',action: 'topics')}">Topic</a></li>
-                                    <li><a href="#">Post</a></li>
-                                    <li><a href="/login/logout">Logout</a></li></g:if>
+                                    <li><a href="${createLink(controller: 'user', action: 'profile')}">Profile</a></li>
+                                    <g:if test="${session.user}">
+                                        <li><a href="${createLink(controller: 'user', action: 'admin')}">Users</a></li>
+                                        <li><a href="${createLink(controller: 'user', action: 'topics')}">Topic</a></li>
+                                        <li><a href="#">Post</a></li>
+                                        <li><a href="/login/logout">Logout</a></li>
+                                    </g:if>
                                 </ul>
                             </div>
                         </div>

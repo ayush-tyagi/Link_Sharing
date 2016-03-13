@@ -16,30 +16,36 @@
 
 <div class="container-fluid">
     <div class="col-xs-5">
+        <g:uploadForm controller="user" action="forgotPassword" >
     <form class="form-horizontal">
-    <div class="form-group">
-        <label class="pull-left control-label col-xs-4" for="email">Email:</label>
+    <div class="form-group" >
+        <label class="pull-left control-label col-xs-4" >Email:</label>
 
         <div class="col-xs-8">
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
+            <g:textField  class="form-control" id="email" name="email" placeholder="Enter email"/>
         </div>
     </div>
+        <div class="form-group">
+            <label class="pull-left control-label col-xs-4" for="userName">UserName</label>
+
+            <div class="col-xs-8">
+                <g:textField  class="form-control" name="userName" id="userName" placeholder="User Name"/>
+            </div>
+        </div>
 
     <div class="form-group">
-        <label class="control-label col-xs-6">
-            <a href="#" style="text-decoration:underline;text-align:center"></a>
-        </label>
+
 
         <div class="col-xs-4">
-        <span>    <g:submitButton type="submit" name="submit" formaction=""
-                            class="form-control btn btn-primary " id="submit"
+        <span>    <g:submitButton type="submit" name="submit"
+                            class="form-control btn btn-success " id="submit"
                             placeholder="Share"
-                            style="color:blue;border:solid black;border-radius:7px"/>
+                            style="color:black;border:solid black;border-radius:7px"/>
 
 
 
             <g:submitButton name="cancel" type="cancel"
-                            class="form-control btn btn-primary " id="cancel"
+                            class="form-control btn btn-danger " id="cancel"
                             placeholder="Cancel"
                             style="color:blue;border:solid black;border-radius:7px"/>
 </span>        </div>
@@ -48,6 +54,7 @@
  </div>
 
 </form>
+        </g:uploadForm>
     </div>
     </div>
 </body>
