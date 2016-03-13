@@ -7,7 +7,8 @@
     <div class="panel-body" style="overflow-y: auto;height: 330px;">
      <g:each in="${readingItems}" var="item">
         <div class="col-xs-2">
-            <span class="glyphicon glyphicon-user" style="font-size:60px;border:solid lightgrey;color: #366EE0;"></span>
+            <my:userImage  width="64px" height="64px"
+                           class="img img-responsive img-thumbnail"/>
         </div>
 
         <div class="col-xs-10">${item.user}<span class="text-muted">@${item.user}</span><span class="pull-right"><a
@@ -20,7 +21,7 @@
                             <i class="fa fa-google-plus" style="color: red"></i>
             </div>
             %{--<div class="col-xs-10">"${item.isRead}"</div>--}%
-            <div class="col-xs-2"><a href="#" style="text-decoration:underline;font-size:10px">Download</a>
+            <div class="col-xs-2"><my:isLinkOrDoc id="${item.resource.id}"/>
             </div>
 
             <div class="col-xs-3"><a href="#" style="text-decoration:underline;font-size:10px">View full site</a>

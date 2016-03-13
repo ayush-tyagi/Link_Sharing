@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
+import enums.L_Visibility
 
 class FirstTagLib {
     //static defaultEncodeAs = [taglib:'html']
@@ -44,7 +45,7 @@ class FirstTagLib {
         if (Resource.isLinkResourceOrDocResource(attrs.id) == "LinkResource") {
             out << "<a href='www.google.com' target=\"_blank\" style=\"text-decoration:underline;font-size:13px\"> Link </a>"
         } else if (Resource.isLinkResourceOrDocResource(attrs.id) == "DocumentResource") {
-            String ref = createLink(controller: 'documentResource', action: 'download',params: [id:attrs.id])
+            String ref = createLink(controller: 'documentResource', action: 'download', params: [id: attrs.id])
             out << "<a href=${ref} > Download </a>"
         } else {
             out << "<h6 style=\"text-decoration:underline;font-size:13px\">Not Found<h6>"
@@ -106,13 +107,34 @@ class FirstTagLib {
         out << count
     }
 
-    def userImage ={ attrs, body ->
+    def userImage = { attrs, body ->
         Long userId = attrs.userId
         def height = attrs.height
         def width = attrs.width
         def tagClass = attrs.class
-        out<<"<img src='${createLink(controller: 'user',action: 'image',params: [id:userId])}' "+"class='${tagClass}' " +
+        out << "<img src='${createLink(controller: 'user', action: 'image', params: [id: userId])}' " + "class='${tagClass}' " +
                 "height='${height}' width='${width}' />"
+    }
+    def canUpdateTopic = { attrs, body ->
+        User user = session.user
+        Topic topic = Topic.get(attrs.topicId)
+        L_Visibility visibility = topic.visibility
+        Subscription subscription = Subscription.findByTopicAndUser(topic, user)
+        if(subscription){
+        if (user?.isAdmin || topic.createdBy == user) {
+            out << render(template: '/resource/adminSeriousnessVisibility',
+                    model: [subscription: subscription,visibility: visibility,topicId: attrs.topicId])
+        } else {
+            out << "<my:showSeriousness topicId=\"${attrs.topicId}\" />"
+        }}
+    }
+
+    def showSeriousness = { attrs, body ->
+
+        Topic topic = Topic.get(attrs.topicId)
+        L_Visibility visibility = topic.visibility
+        out << render(template: '/subscription/normalVisibility',
+                model: [visibility:visibility,topicId: attrs.topicId])
     }
 }
 

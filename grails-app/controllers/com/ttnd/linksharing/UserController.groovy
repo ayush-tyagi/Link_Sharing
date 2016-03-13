@@ -11,10 +11,11 @@ class UserController {
         //render "User DashBoard ${session} ${user} ${user.userName}"
         List<Topic> topicNames = Topic.getTopicsOfUser(user)
 //        List<TopicVo> trendingTopics = Topic.getTrendingTopics()
-
+        int numberOfSubscription = Subscription.countByUser(user)
+        println "----------------->>>>${numberOfSubscription}"
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
         List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "dateCreated", order: "desc"])
-        render(view: 'dashboard', model: [readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
+        render(view: 'dashboard', model: [numberOfSubscription:numberOfSubscription,user: user, readingItems: readingItems, topicNames: topicNames, subscribedTopics: subscribedTopics])
     }
 
     def register(UserCo userCo) {
@@ -25,6 +26,7 @@ class UserController {
                 user.photo = params.photo.bytes
             }
             user.isActive = true
+//            user.isAdmin=true
             if (user.validate()) {
                 user.save(flush: true)
                 flash.message = "Success"
@@ -51,5 +53,12 @@ class UserController {
             response.outputStream << assetResourceLocator.findAssetForURI('girl1.png').getInputStream()
         }
         response.outputStream.flush()
+    }
+
+    def profile(){
+         User user = session.user
+        int numberOfSubscription = Subscription.countByUser(user)
+        List<Topic> subscribedTopics = User.getSubscribedTopics(user)
+        render(view: 'profile',model: [numberOfSubscription:numberOfSubscription,user:user,subscribedTopics:subscribedTopics])
     }
 }

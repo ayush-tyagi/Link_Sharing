@@ -27,7 +27,6 @@
     <div class="col-xs-7">
         <g:render template="/topic/recentShare" model="[recentShares: recentShares]"/>
         <my:topPosts/>
-        <my:trendingTopics/>
     </div>
 
     <div class="col-xs-5">

@@ -10,11 +10,13 @@ class UserCo {
     String password
     String confirmPassword
     String email_id
+    Boolean isAdmin
+    Boolean isActive
     def photo
 
     static constraints = {
-
-
+        isActive(blank:true,nullable:true)
+        isAdmin(blank:true,nullable:true)
         email_id(unique: true, blank: false, email: true)
         password(blank: false, minSize: 5)
         firstName(blank: false)

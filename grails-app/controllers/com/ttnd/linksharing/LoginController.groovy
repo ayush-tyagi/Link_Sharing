@@ -17,7 +17,7 @@ class LoginController {
     }
 
     def loginHandler(String userName, String password) {
-        User user = User.findByFirstNameAndPassword(userName, password)
+        User user = User.findByUserNameAndPassword(userName, password)
         if (user) {
             if (user.isActive) {
                 session.user = user
@@ -44,17 +44,34 @@ class LoginController {
 
 //    def showTopics() {
 //    }
+    def forgotPassword(){
+        render(view: '/login/forgotPassword')
+    }
 
-
-    def testMail() {
+    def testMail(String email,String topicName) {
+        Topic topic = Topic.findByName(topicName)
+        println "----------------${topic}"
         mailService.sendMail {
-            to "ayush.tyagi@tothenew.com"
+            to "${email}"
             from "ayush.tyagi@tothenew.com"
-            subject "Hello Tyagi"
-            body 'Or btao kyaa haal hain'
+            subject "Invitation request"
+            body "${topic} invitation from"
         }
 
     }
 
 
+    def changePassword(String password,String confirmPassword){
+     User user = session.user
+     if(password==confirmPassword){
+         user.password=password
+         if(User.executeUpdate("update User as u set u.password=:password where u.id=${user.id}",[password:password])){
+             render("Your Password is changed Successfully")
+         }else{
+             render "${user.errors.allErrors}"
+         }
+     }else{
+         render "Password does not match with confirm password"
+     }
+    }
 }

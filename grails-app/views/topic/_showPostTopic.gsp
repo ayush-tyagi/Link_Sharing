@@ -1,5 +1,5 @@
-<div class="panel panel-default" style="border:3px solid black;border-radius:8px">
-    <div class="panel-heading" style="border-bottom:3px solid black;">Topics
+<div class="panel panel-primary" style="border:3px solid blue;border-radius:8px">
+    <div class="panel-heading" style="border-bottom:3px solid #0000ff;">Topics
         <div class="pull-right">
             <a href="#" style="text-decoration:underline">View ALL</a>
         </div>

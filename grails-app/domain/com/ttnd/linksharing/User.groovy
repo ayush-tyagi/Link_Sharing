@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import enums.Seriousness
+
 class User {
 
     String email_id;
@@ -43,12 +45,12 @@ class User {
     }
 
     String toString() {
-        return "${firstName}"
+        return "${userName}"
     }
-
+/*
     String getUserName() {
         [this.firstName, this.lastName].join(' ')
-    }
+    }*/
 
      static List<Topic> getSubscribedTopics(User user){
          List<Topic> list = Subscription.createCriteria().list(){
@@ -80,5 +82,20 @@ class User {
             return true
         }
        return false
+    }
+
+    Seriousness getSubscriptionSeriousness(Long id){
+        Topic topic = Topic.get(id)
+        Subscription subscription = Subscription.findByTopicAndUser(topic,this)
+        return subscription.seriousness
+    }
+
+    Boolean equalSessionUser(Long id){
+        Topic topic=Topic.get(id)
+        if(this==topic.createdBy){
+            return true
+        }else{
+            return false
+        }
     }
 }

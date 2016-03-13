@@ -11,7 +11,7 @@
     <meta name="layout" content="main">
     <title>DashBoard</title>
     <script>
-        var msg = "${flash.message}" ? "${flash.message}" :"${flash.error}";
+        var msg = "${flash.message}" ? "${flash.message}" : "${flash.error}";
         if (msg != undefined && msg != "") {
             alert(msg);
         }
@@ -20,12 +20,16 @@
 
 <body>
 <div class="col-xs-5">
-    <g:render template="/subscription/subscriptions" model="[subscribedTopics:subscribedTopics]"/>
-    <my:trendingTopics/>
+    <g:render template="/user/users" model="[user:user,numberOfSubscription:numberOfSubscription]"/>
+    <div id="ajaxifiedSubscription">
+        <g:render template="/subscription/subscriptions" model="[subscribedTopics: subscribedTopics]"/>
+    </div>
+
 </div>
 
 <div class="col-xs-7">
     <g:render template="/readingItem/inbox" model="[readingItems: readingItems]"/>
+    <my:trendingTopics/>
 </div>
 </body>
 </html>

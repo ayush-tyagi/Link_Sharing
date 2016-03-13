@@ -14,44 +14,52 @@ class SubscriptionController {
         if (subscription.validate()) {
             subscription.save(flush: true)
 //            flash.message = "Saved successfully"
-                  render([message :"Saved successfull"] as JSON)
+            render([message: "Saved successfull"] as JSON)
 // redirect(controller: "user",action: "index")
-        }else{
+        } else {
             flash.error = "Unsuccessful to save"
 //            render "${subscription.errors.allErrors}"
-            render([error :"Saved Unsuccessfull"] as JSON)
+            render([error: "Saved Unsuccessfull"] as JSON)
         }
     }
 
-    /*def update(Long id){                           //,Seriousness seriousness
-        if(id){
-            Topic topic = Topic.get(id)
-            User user = session["user"]
-            Subscription subscription = new Subscription(topic:topic,user:user)
-
-            if(subscription.validate()){
-                subscription.save()
-                render "Success"
-            }else{
-                render "${subscription.errors.allErrors}"
+    def update(Long id, String seriousness) {                           //,Seriousness seriousness
+        println "-----------------<<<<<<>>>>>>>${params}"
+        if (id) {
+            Subscription subscription = Subscription.get(id)
+            if (subscription) {
+                subscription.seriousness = Seriousness.changeStringInSeriousness(seriousness)
+                if (subscription.validate()) {
+                    subscription.save(flush: true)
+                    render([message: 'Successfully changed'] as JSON)
+                } else {
+                    render([error: 'Fail to update'] as JSON)
+                }
+            } else {
+                render([error: 'Fail to update'] as JSON)
             }
-
         }
-    }*/
+    }
 
     def delete(Long topicId) {
-        Topic topic=Topic.get(topicId)
+        Topic topic = Topic.get(topicId)
         User user = session.user
-        Subscription subscription = Subscription.findByTopicAndUser(topic,user)
+        Subscription subscription = Subscription.findByTopicAndUser(topic, user)
         if (subscription) {
-            subscription.delete(flush: true)
+            if (!user.equalSessionUser(topicId)) {
+                subscription.delete(flush: true)
+                List<Topic> subscribedTopics = User.getSubscribedTopics(user)
+                render(template: 'subscribedTopics', model: [subscribedTopics: subscribedTopics])
+//                render([message :"Delete successfull",status:true] as JSON)
 //            flash.message ="Deleted Successfully"
 //            redirect(controller: "user" ,action:"index" )
-            render([message :"Delete successfull"] as JSON)
+            } else {
+                render([error: "Creator of topic cannot delete subscription"] as JSON)
+            }
         } else {
 //            flash.error = "Not Deleted"
 //            render "User not Found  "
-            render([message :"Cannot be deleted"] as JSON)
+            render([error: "Cannot be deleted"] as JSON)
         }
     }
 }

@@ -5,27 +5,7 @@
         </div>
     </div>
 
-    <div class="panel-body" style="overflow-y: auto;height: 238px">
-        <g:each in="${subscribedTopics}" var="topics">
-            <div class="col-xs-2">
-                <my:userImage  width="64px" height="64px"
-                              class="img img-responsive img-thumbnail"/>
-            </div>
-
-            <div class="col-xs-10 pull-left"><a href="#" class="col-xs-8"
-                                                style="text:decoration-underline">Grails</a></br></br>
-                <span class="col-xs-4 text-muted">"${topics}"</span>
-            <span class="col-xs-4" style="padding-left:1px">Subscriptions</span>
-            <span class="col-xs-4" style="padding-left:1px">Topics</span><br>
-            <span class="col-xs-4" style="color:blue;padding-left:1px">50</span>
-            <span class="col-xs-4" style="color:blue;padding-left:1px">50</span>
-            </div>
-
-            <div class="col-xs-4"></div>
-
-               <my:showSubscribe topicId="${topics.id}"/>
-           <div class="col-xs-12"><hr style="border-width:1px;padding:0px;border-color:silver"></div>
-            </br>
-        </g:each>
+    <div class="panel-body" id="subscribedTopics" style="overflow-y: auto;height: 300px;">
+        <g:render template="/subscription/subscribedTopics" model="[subscribedTopics: subscribedTopics]"/>
     </div>
 </div>
