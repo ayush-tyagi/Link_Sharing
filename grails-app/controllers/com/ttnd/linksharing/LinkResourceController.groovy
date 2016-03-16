@@ -5,6 +5,7 @@ import com.ttnd.linksharing.co.LinkResourceCo
 class LinkResourceController extends ResourceController{
 
     def index() {
+        render "Hello index"
     }
 
     def save(LinkResourceCo linkResourceCo) {

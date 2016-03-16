@@ -46,6 +46,17 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
 
+    codenarc {
+        ruleSetFiles = "file:grails-app/conf/CodeNarcRules.groovy"
+        reports = {
+            HtmlReport('html') {                  // Report type is 'html'
+                outputFile = 'target/CodeNarcReport.html'
+                title = 'My Test Code Narc Report'
+            }
+        }
+    }
+
+
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime 'mysql:mysql-connector-java:5.1.29'
@@ -63,6 +74,10 @@ grails.project.dependency.resolution = {
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
         compile ":asset-pipeline:2.5.7"
         compile "org.grails.plugins:mail:1.0.7"
+        compile "org.grails.plugins:codenarc:0.25.1"
+//        compile "org.grails.plugins:jquery-validation-ui:1.4.9"
+
+        compile "org.grails.plugins:quartz:1.0.2"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"

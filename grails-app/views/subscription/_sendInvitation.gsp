@@ -8,7 +8,7 @@
 
             <div class="modal-body">
 
-                <g:uploadForm class="form-group"  controller="login" action="testMail">
+                <g:uploadForm class="form-group"  controller="topic" action="invite">
                     <label class="control-label col-xs-4">Email*</label>
 
                     <div class="col-xs-8">

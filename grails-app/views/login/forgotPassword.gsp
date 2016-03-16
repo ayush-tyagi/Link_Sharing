@@ -24,14 +24,14 @@
         <div class="col-xs-8">
             <g:textField  class="form-control" id="email" name="email" placeholder="Enter email"/>
         </div>
-    </div>
+    </div>%{--
         <div class="form-group">
             <label class="pull-left control-label col-xs-4" for="userName">UserName</label>
 
             <div class="col-xs-8">
                 <g:textField  class="form-control" name="userName" id="userName" placeholder="User Name"/>
             </div>
-        </div>
+        </div>--}%
 
     <div class="form-group">
 

@@ -44,26 +44,26 @@ function unsubscribe(topicId) {
 
 }
 
-function deactivateUser(id){
+function deactivateUser(id) {
     event.preventDefault();
     $.ajax({
-        url:'/user/changeToDeactive',
-        data:{id:id},
-        method:'post',
-        success:function(data){
+        url: '/user/changeToDeactive',
+        data: {id: id},
+        method: 'post',
+        success: function (data) {
             $(".myUser").html(data);
             alert(data.message)
         }
     })
 }
 
-function activateUser(id){
+function activateUser(id) {
     event.preventDefault();
     $.ajax({
-        url:'/user/changeToActive',
-        data:{id:id},
-        method:'post',
-        success:function(data){
+        url: '/user/changeToActive',
+        data: {id: id},
+        method: 'post',
+        success: function (data) {
             alert(data.message)
         }
     })
@@ -155,23 +155,38 @@ function changeTopicNameByButton(id) {
     })
 }
 
+function searchTopic() {
+    var q = $("#searchTopicId").val();
+    //alert("clicked");
+    //alert(q);
+    $.ajax({
+        url: '/topic/searchTopic',
+        data: {q: q},
+        method: 'post',
+        success: function (data) {
+            alert(data.message)
+            $("#topicContent").html(data)
+        }
+    })
+}
+
 
 function unhideResourceDescription() {
     $("#changeDescription").removeClass("hide")
 //alert("Clicked")
 }
 
-function changeResourceDescription(id){
+function changeResourceDescription(id) {
     var resourceDesc = $("#textDescription").val();
     //alert(resourceDesc)
     $.ajax({
-        url:'/resource/changeDescription',
-        data:{resourceDesc:resourceDesc,id:id},
-        method:'post',
-        success:function(data){
+        url: '/resource/changeDescription',
+        data: {resourceDesc: resourceDesc, id: id},
+        method: 'post',
+        success: function (data) {
             alert(data.message)
         },
-        error:function(data){
+        error: function (data) {
             alert(data.message)
         }
     })

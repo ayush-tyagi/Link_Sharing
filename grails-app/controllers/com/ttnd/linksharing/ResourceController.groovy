@@ -7,7 +7,9 @@ import grails.converters.JSON
 
 class ResourceController {
 
-    def index() {}
+    def index() {
+        render "Hello index"
+    }
 
     def delete(Long id) {
         Resource resource = Resource.load(id)
@@ -30,10 +32,16 @@ class ResourceController {
         if (co.q) {
             co.visibility = L_Visibility.PUBLIC
             List<Resource> resources = Resource.search(co).list()
-            render resources
+            render(view: '/resource/globalSearch',model: [resources:resources])
         } else {
             flash.error = "Search Criteria not given"
         }
+    }
+
+    def creatorPost() {
+        User user = session.user
+        List<Resource> resources = Resource.findAllByCreatedBy(user)
+        render(view: '/resource/post', model: [resources: resources])
     }
 
     def show(Long id) {
@@ -53,17 +61,17 @@ class ResourceController {
         //render list*.properties
     }
 
-    def changeDescription(String resourceDesc,Long id){
+    def changeDescription(String resourceDesc, Long id) {
         Resource resource = Resource.get(id)
 //        println "-------->>>${resource}"
-        if(resource){
-            if(Resource.executeUpdate("update Resource as r set r.description=:desc where r.id=${resource.id}",
-                    [desc:resourceDesc])){
-                render([message:"You have changed Resource Description successfully"]as JSON)
+        if (resource) {
+            if (Resource.executeUpdate("update Resource as r set r.description=:desc where r.id=${resource.id}",
+                    [desc: resourceDesc])) {
+                render([message: "You have changed Resource Description successfully"] as JSON)
             }
-            render([message:"You have changed Resource Description successfully"]as JSON)
-        }else{
-            render([message:"You cannot changed Resource Description"]as JSON)
+            render([message: "You have changed Resource Description successfully"] as JSON)
+        } else {
+            render([message: "You cannot changed Resource Description"] as JSON)
         }
     }
 
@@ -75,7 +83,7 @@ class ResourceController {
 
         users.each { User user ->
             if (resource.createdBy != user) {
-                println "...............Users.................>${users}"
+//                println "...............Users.................>${users}"
                 ReadingItem item = new ReadingItem(resource: resource, user: user, isRead: false).save(flush: true, failOnError: true)
                 /*user.addToReadingItems(item)
                 user.save(flush: true, failOnError: true)

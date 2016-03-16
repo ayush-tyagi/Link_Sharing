@@ -25,11 +25,15 @@ abstract class Resource {
 
     static namedQueries = {
         search { ResourceSearchCo co ->
-            if (co.topicId) {
-                'topic' {
-                    eq('id', co.topicId)
-                    eq('visibility', co.visibility)
+            or {
+                if (co.topicId) {
+                    'topic' {
+                        eq('id', co.topicId)
+                        eq('visibility', co.visibility)
+                        like('name', "%${co.q}%")
+                    }
                 }
+                ilike('description', "%${co.q}%")
             }
         }
     }
@@ -54,40 +58,40 @@ abstract class Resource {
 
     }
 
-    static List<Resource> getTopPosts()
-    {
+    static List<Resource> getTopPosts() {
         List list = ResourceRating.topPost()
         List<Resource> resources = Resource.getAll(list)
         resources
     }
 
-    static String isLinkResourceOrDocResource(Long id){
-      Resource resource = Resource.get(id)
-        if(resource.instanceOf(LinkResource)){
+    static String isLinkResourceOrDocResource(Long id) {
+        Resource resource = Resource.get(id)
+        if (resource.instanceOf(LinkResource)) {
             return "LinkResource"
-        }else if(resource.instanceOf(DocumentResource)){
+        } else if (resource.instanceOf(DocumentResource)) {
             return "DocumentResource"
         }
         return "Not Found"
     }
 
-   /* Boolean canViewBy(User user){
-      Resource resource = Resource.get(id)
-        if(resource.topic.canViewedBy(topic.id)){
-        true
-        }else{
-            false
-        }
-    }*/
-     Boolean canViewBy(User user) {
-        if (this.topic.canViewedBy(user)){
+    /* Boolean canViewBy(User user){
+       Resource resource = Resource.get(id)
+         if(resource.topic.canViewedBy(topic.id)){
+         true
+         }else{
+             false
+         }
+     }*/
+
+    Boolean canViewBy(User user) {
+        if (this.topic.canViewedBy(user)) {
             return true
         }
-         return false
+        return false
     }
 
 
-    def deleteFile(){
+    def deleteFile() {
         log.info("Will be implemented in subClass")
     }
 

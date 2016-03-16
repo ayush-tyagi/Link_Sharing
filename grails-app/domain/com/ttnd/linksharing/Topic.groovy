@@ -21,7 +21,8 @@ class Topic {
     }
 
     String toString() {
-        return "Topic ${id}"
+//        return "Topic ${id}"
+    return "${name}"
     }
 
     def afterInsert() {

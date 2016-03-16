@@ -11,7 +11,8 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-grails.project.groupId = "com.ttnd.LinkSharing" // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = "com.ttnd.LinkSharing"
+grails.serverBaseURL = "http://localhost:8080"// change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
 grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
@@ -154,3 +155,81 @@ log4j.main = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 }
+
+// Added by the JQuery Validation UI plugin:
+jqueryValidationUi {
+	errorClass = 'error'
+	validClass = 'valid'
+	onsubmit = true
+	renderErrorsOnTop = false
+	
+	qTip {
+		packed = true
+	  classes = 'ui-tooltip-red ui-tooltip-shadow ui-tooltip-rounded'  
+	}
+	
+	/*
+	  Grails constraints to JQuery Validation rules mapping for client side validation.
+	  Constraint not found in the ConstraintsMap will trigger remote AJAX validation.
+	*/
+	StringConstraintsMap = [
+		blank:'required', // inverse: blank=false, required=true
+		creditCard:'creditcard',
+		email:'email',
+		inList:'inList',
+		minSize:'minlength',
+		maxSize:'maxlength',
+		size:'rangelength',
+		matches:'matches',
+		notEqual:'notEqual',
+		url:'url',
+		nullable:'required',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	// Long, Integer, Short, Float, Double, BigInteger, BigDecimal
+	NumberConstraintsMap = [
+		min:'min',
+		max:'max',
+		range:'range',
+		notEqual:'notEqual',
+		nullable:'required',
+		inList:'inList',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	CollectionConstraintsMap = [
+		minSize:'minlength',
+		maxSize:'maxlength',
+		size:'rangelength',
+		nullable:'required',
+		validator:'validator'
+	]
+	
+	DateConstraintsMap = [
+		min:'minDate',
+		max:'maxDate',
+		range:'rangeDate',
+		notEqual:'notEqual',
+		nullable:'required',
+		inList:'inList',
+		unique:'unique',
+		validator:'validator'
+	]
+	
+	ObjectConstraintsMap = [
+		nullable:'required',
+		validator:'validator'
+	]
+	
+	CustomConstraintsMap = [
+		phone:'true', // International phone number validation
+		phoneUS:'true',
+		alphanumeric:'true',
+		letterswithbasicpunc:'true',
+    lettersonly:'true'
+	]	
+}
+

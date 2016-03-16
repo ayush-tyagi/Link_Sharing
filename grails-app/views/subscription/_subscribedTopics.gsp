@@ -6,7 +6,9 @@
 
     <div class="col-xs-10 pull-right"><a href="#" class="col-xs-8"
                                         style="text:decoration-underline">Grails</a></br></br>
-        <span class="col-xs-4 text-muted pull-right">"${topics}"</span><br>
+        <span class="col-xs-4 text-muted pull-right">
+    <a href="${createLink(controller: 'user' ,action:'publicProfile' ,params: [id:topics.id])}">
+    ${topics.name} </a></span><br>
     <span class="col-xs-4" style="padding-left:1px">Subscriptions</span>
     <span class="col-xs-4" style="padding-left:1px">Topics</span><br>
     <span class="col-xs-4" style="color:blue;padding-left:1px"><my:subscriptionCount topicId="${topics.id}"/></span>

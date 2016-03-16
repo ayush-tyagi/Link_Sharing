@@ -2,14 +2,29 @@ package com.ttnd.linksharing
 
 //import CO.ResourceSearchCo
 import com.ttnd.linksharing.co.ResourceSearchCo
+import com.ttnd.linksharing.co.SearchCo
 import com.ttnd.linksharing.com.ttnd.linksharing.vo.TopicVo
 import enums.L_Visibility
 import grails.converters.JSON
-import grails.validation.Validateable
+
+//import grails.validation.Validateable
 
 class TopicController {
 
-    def index() {}
+    def topicService
+
+    def index() {
+        render "hello index"
+    }
+
+    /*def invite(Long id,String email_id){
+        Topic topic = Topic.get(id)
+        if(topic){
+
+        }else{
+            flash.error = "Topic not found"
+        }
+    }*/
 
     def show(ResourceSearchCo co) {
         Topic topic = Topic.read(co.topicId)
@@ -34,6 +49,32 @@ class TopicController {
         }
     }
 
+    def creatorTopics() {
+        User user = session.user
+        List<Topic> topics = Topic.findAllByCreatedBy(user)
+        render(view: '/topic/creatorTopic', model: [topics: topics])
+    }
+
+    def searchTopic(SearchCo searchCo) {
+//         println "________________________>>>>hit  ${searchCo.q }"
+        User user = session.user
+//         println "--------------->>>>${user}"
+        if (user) {
+            List<ReadingItem> readingItems = ReadingItem.createCriteria().list() {
+                'resource' {
+                    'topic' {
+                        like('name', "%${searchCo.q}%")
+                    }
+                }
+            }
+//             println "--------------->>>>inside if"
+//             List<Topic> topics = Topic.findAllByNameIlike("%${searchCo.q}%")
+//             println  "--------------->>>>inside if ${topics}"
+            render(view: '/readingItem/_readingItemsInbox', model: [readingItems: readingItems])
+        } else {
+            render([message: "${user}"] as JSON)
+        }
+    }
 
     def save(String topicName, String visibility) {
         log.info topicName
@@ -100,5 +141,35 @@ class TopicController {
         } else {
             render([message: "Oops something went wrong "] as JSON)
         }
+    }
+
+    def invite(String topicName, String email) {
+        if (topicName && email) {
+            Topic topic =Topic.findByName(topicName)
+            if (topicService.invite(topic.name, email)) {
+                flash.message = "Invitation Sent"
+            } else {
+                flash.error = "Invitation not Sent"
+            }
+        }
+        redirect(controller: 'login', action: 'index')
+    }
+
+    def join(Long id) {
+        Topic topic = Topic.get(id)
+        if (topic) {
+            if (session.user) {
+                if (topicService.joinTopic(topic, session.user)) {
+                    flash.message = "Topic Subscribed"
+                } else {
+                    flash.error = "Topic not Subscribed"
+                }
+            } else {
+                flash.error = "Session not set"
+            }
+        } else {
+            flash.error = "Topic do not exists"
+        }
+        redirect(controller: "login", action: "index")
     }
 }

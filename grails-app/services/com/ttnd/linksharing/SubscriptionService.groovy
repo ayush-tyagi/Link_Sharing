@@ -15,8 +15,15 @@ class SubscriptionService {
         if(topicSearchCo.id)
         {
             User user = topicSearchCo.getUser()
-            return user.getSubscribedTopics()
+            return user.getSubscribedTopics(user)
         }
+    }
+
+    Subscription saveSubscription(Subscription subscription) {
+        if (subscription.validate()) {
+            return subscription.save(flush: true)
+        }
+        return null
     }
 
 }

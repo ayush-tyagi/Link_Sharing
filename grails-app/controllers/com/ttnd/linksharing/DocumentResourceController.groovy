@@ -1,9 +1,9 @@
 package com.ttnd.linksharing
-
+import static org.springframework.http.HttpStatus.*
 import com.ttnd.linksharing.co.DocumentResourceCo
 import org.springframework.web.multipart.MultipartFile
 
-import static org.springframework.http.HttpStatus.*
+
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)

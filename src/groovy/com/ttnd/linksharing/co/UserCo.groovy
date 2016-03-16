@@ -1,6 +1,7 @@
 package com.ttnd.linksharing.co
 
 import grails.validation.Validateable
+import org.springframework.web.multipart.MultipartFile
 
 @Validateable
 class UserCo {
@@ -12,7 +13,7 @@ class UserCo {
     String email_id
     Boolean isAdmin
     Boolean isActive
-    def photo
+    MultipartFile photo
 
     static constraints = {
         isActive(blank:true,nullable:true)

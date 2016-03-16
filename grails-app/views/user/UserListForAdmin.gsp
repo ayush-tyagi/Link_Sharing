@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ayush
-  Date: 13/3/16
-  Time: 11:02 AM
---%>
-
-<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">
@@ -21,59 +13,25 @@
     <div class="panel panel-primary" style="border:3px solid  #0000ff;border-radius:8px">
         <div class="panel-heading" style="border-bottom:3px solid  #0000ff;">
             Users
-            <div class="pull-right">
-
-                <g:select class="btn dropdown-toggle" data-toggle="dropdown" noSelection="['': 'Search']" name="topicName"
-                          id="sdsdh" optionKey="${id}" style="width:200px;float:right;padding: 0px;" from="${}"/>
-            </div>
-        </div>
-
-        <div class="panel-body">
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Active</th>
-                    <th>Manage</th>
-                </tr>
-                </thead>
-                <tbody>
-            <g:each in="${users}" var="user"><div class="myUser">
-                <g:if test="${user.isActive}">
-                <tr class="alert-success">
-                    <td>${user.id}</td>
-                    <td>${user.userName}</td>
-                    <td>${user.email_id}</td>
-                    <td>${user.firstName}</td>
-                    <td>${user.lastName}</td>
-                    <td><g:if test="${users.isActive}">Yes</g:if><g:else>No</g:else></td>
-                    <td><my:activateDeacivate id="${user.id}"/></td>
-                </tr>
-                </g:if>
-                <g:else>
-                    <tr class="alert-danger">
-                        <td>${user.id}</td>
-                        <td>${user.userName}</td>
-                        <td>${user.email_id}</td>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td><g:if test="${users.isActive}">Yes</g:if><g:else>No</g:else></td>
-                        <td><my:activateDeacivate id="${user.id}"/></td>
-                    </tr>
-
-                </g:else></div>
-
-            </g:each>
-                </tbody>
-            </table>
+            <g:form controller="user" action="admin">
+                <div class="input-group" style="float: right">
+                    <g:textField type="text" class="form-control" placeholder="Search" name="q"
+                                 id="searchTopicId" style="width: inherit;"/>
+                    <g:submitButton name="Change" class="btn btn-primary"
+                                    value="Search"/>
+                    <g:select class="btn dropdown-toggle" data-toggle="dropdown" noSelection="[null: 'Select']"
+                              name="isActive" optionKey="type" value="${co?.isActive}"
+                              style="width:200px;padding-right: 20px;float: right;"
+                              from="${enums.Active.values()}"/>
+                </div>
+            </g:form>show
 
         </div>
     </div>
+
+    <g:render template="/user/listUserForAdmin" model="[users: users]"/>
+
+</div>
 
 </div>
 </body>

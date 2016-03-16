@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.co.ResourceSearchCo
+import com.ttnd.linksharing.co.UserSearchCo
 import enums.Seriousness
 
 class User {
@@ -16,10 +18,10 @@ class User {
     byte[] photo;
     Date lastUpdated;
     Date dateCreated;
-    static transients = ['confirmPassword','subscribedTopics']
+    static transients = ['confirmPassword', 'subscribedTopics']
     static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating, readingItems: ReadingItem]
     static mapping = {
-        sort(id:'desc')
+        sort(id: 'desc')
         photo(sqlType: 'longblob')
 
     }
@@ -34,7 +36,7 @@ class User {
         isAdmin(nullable: true)
         photo(nullable: true)
         userName nullable: false
-        confirmPassword(nullable: true,bindable:true, blank: true, validator: { confirmPassword, obj ->
+        confirmPassword(nullable: true, bindable: true, blank: true, validator: { confirmPassword, obj ->
             Long id = 0
             id = obj.getId()
             //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
@@ -44,6 +46,19 @@ class User {
         })
     }
 
+    static namedQueries = {
+        search { UserSearchCo co ->
+            or {
+                ilike('userName',"%${co.q}%")
+                ilike('firstName',"%${co.q}%")
+                ilike('lastName',"%${co.q}%")
+                ilike('email_id',"%${co.q}%")
+            }
+
+        }
+    }
+
+
     String toString() {
         return "${userName}"
     }
@@ -52,50 +67,53 @@ class User {
         [this.firstName, this.lastName].join(' ')
     }*/
 
-     static List<Topic> getSubscribedTopics(User user){
-         List<Topic> list = Subscription.createCriteria().list(){
-             projections{
-                 distinct('topic')
-             }
-             eq('user',user)
-         }
-         list
-     }
-     Boolean canDeleteResource(Long id){
-      Resource resource = Resource.get(id)
-      if(resource.createdBy==this || this?.isAdmin ){
-        true
-      }else{
-          false
-      }
-     }
+    static List<Topic> getSubscribedTopics(User user) {
+        List<Topic> list = Subscription.createCriteria().list() {
+            projections {
+                distinct('topic')
+            }
+            eq('user', user)
+        }
+        list
+    }
 
-    int getScore(Long id){
+    Boolean canDeleteResource(Long id) {
         Resource resource = Resource.get(id)
-        ResourceRating resourceRating = ResourceRating.findByResourceAndUser(resource,this)
+        if (resource.createdBy == this || this?.isAdmin) {
+            true
+        } else {
+            false
+        }
+    }
+
+    int getScore(Long id) {
+        Resource resource = Resource.get(id)
+        ResourceRating resourceRating = ResourceRating.findByResourceAndUser(resource, this)
         int score = resourceRating.score
         return score
     }
-    Boolean isSubscribe(Long topicId){
-     Subscription subscription = Subscription.findByTopicAndUser(Topic.get(topicId),this)
-        if(subscription){
+
+    Boolean isSubscribe(Long topicId) {
+        Subscription subscription = Subscription.findByTopicAndUser(Topic.get(topicId), this)
+        if (subscription) {
             return true
         }
-       return false
+        return false
     }
 
-    Seriousness getSubscriptionSeriousness(Long id){
+    Seriousness getSubscriptionSeriousness(Long id) {
         Topic topic = Topic.get(id)
-        Subscription subscription = Subscription.findByTopicAndUser(topic,this)
+        Subscription subscription = Subscription.findByTopicAndUser(topic, this)
         return subscription.seriousness
     }
 
-    Boolean equalSessionUser(Long id){
-        Topic topic=Topic.get(id)
-        if(this==topic.createdBy){
+    Boolean equalSessionUser(Long id) {
+        Topic topic = Topic.get(id)
+        if (this == topic.createdBy) {
             return true
-        }else{
+        } else {
             return false
         }
     }
+
 }

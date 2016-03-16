@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import grails.converters.JSON
+
 class ReadingItemController {
 
     def index() {
@@ -9,14 +11,18 @@ class ReadingItemController {
     def changeIsRead(Long resourceId, Boolean isRead) {
 //        ReadingItem readingItem = ReadingItem.get(id)
         // Resource resource = Resource.get(resourceId)
-
+        String message
+        boolean status
         User user = session.user
         if (ReadingItem.executeUpdate("update ReadingItem as r set r.isRead=:isRead where r.resource.id=:resourceId " +
                 "and r.user.id=${user.id}", [isRead: isRead, resourceId: resourceId])) {
-            flash.message = "Success"
+         message = "Successfully changed"
+            status = true
         } else {
-            flash.error = "Updation failed"
+            message = "Unsuccessful attempt"
+            status = false
         }
-        redirect(controller: 'user', action: 'index')
+//        redirect(controller: 'user', action: 'index')
+       render([message,status]as JSON)
     }
 }

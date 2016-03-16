@@ -10,12 +10,23 @@
     <title><g:layoutTitle default="Grails"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <asset:stylesheet src="bootstrap.min.css"/>
+    <asset:stylesheet src="bootstrap-theme.min.css"/>
+    <asset:stylesheet src="font-awesome.min.css"/>
+    <asset:javascript src="jquery-2.2.1.min.js"/>
+    <asset:javascript src="jquery.validate.min.js"/>
+    <asset:javascript src="bootstrap.min.js"/>
+    <asset:javascript src="application.js"/>
 
 
     <style>
 
     a {
         text-decoration: underline;
+    }
+
+    .error {
+        border-color: red;
     }
 
     #search-panel {
@@ -44,17 +55,35 @@
                         <a href="${createLink(controller: 'login', action: 'index')}"
                            style="font-size:28px;color:  #0000ff">Link Sharing</a>
                     </div>
-
-                    <div class="col-xs-3" style="padding-top: 15px;">
-                        <div class="panel" id="search-panel" style="border:orangered;">
-                            <div class="glyphicon glyphicon-search" style="color: #366EE0;"></div>
-
-                            <div class="badge pull-right">
-                                <div class="glyphicon glyphicon-remove" style="color: #366EE0;"></div>
+                    <g:if test="${session.user}">
+                    <div class="col-xs-3">
+                        <g:form controller="resource" action="search" class="navbar-form">
+                            <div class="input-group">
+                                <g:textField type="text" class="form-control" placeholder="Search" name="q"
+                                             id="srch-term"/>
+                                <div class="input-group-btn">
+                                    <g:submitButton name="searchSubmit" class="btn btn-primary" type="submit"
+                                                    value="Search"/>
+                                </div>
                             </div>
-                            <input type="text" placeholder="search" style="border:orangered;color: #366EE0;">
-                        </div>
+                        </g:form>
                     </div>
+                    </g:if>
+                    <g:else>
+                        <div class="col-xs-3" style="float: right;">
+                            <g:form controller="resource" action="search" class="navbar-form">
+                                <div class="input-group">
+                                    <g:textField type="text" class="form-control" placeholder="Search" name="q"
+                                                 id="srch-term"/>
+                                    <div class="input-group-btn">
+                                        <g:submitButton name="searchSubmit" class="btn btn-primary" type="submit"
+                                                        value="Search"/>
+                                    </div>
+                                </div>
+                            </g:form>
+                        </div>
+
+                    </g:else>
 
 
                     <div class="col-xs-5">
@@ -79,31 +108,38 @@
                                     data-target="#myModal3"
                                     style="border:none;background:none;">
                                 <div class="glyphicon glyphicon-edit" style="color: #366EE0;"></div></button>
-                        </g:if>
-                        <div class=" pull-right">
 
-                            <div class="dropdown" style="color: #366EE0;">
-                                <button class="btn btn-default dropdown-toggle " type="button" id="dropdownMenu1"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
-                                        style="border:none;color: #366EE0;">
+                            <div class=" pull-right">
 
-                                    <div class="glyphicon glyphicon-user"
-                                         style="font-size:40px;color: #366EE0;">
+                                <div class="dropdown" style="color: #366EE0;">
+                                    <button class="btn btn-default dropdown-toggle " type="button" id="dropdownMenu1"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                            style="border:none;color: #366EE0;">
 
-                                    </div>
-                                    <span class="caret" style="color: #366EE0;"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="${createLink(controller: 'user', action: 'profile')}">Profile</a></li>
-                                    <g:if test="${session.user}">
-                                        <li><a href="${createLink(controller: 'user', action: 'admin')}">Users</a></li>
-                                        <li><a href="${createLink(controller: 'user', action: 'topics')}">Topic</a></li>
-                                        <li><a href="#">Post</a></li>
-                                        <li><a href="/login/logout">Logout</a></li>
-                                    </g:if>
-                                </ul>
+                                        <div class="glyphicon glyphicon-user"
+                                             style="font-size:40px;color: #366EE0;">
+
+                                        </div>
+                                        <span class="caret" style="color: #366EE0;"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li><a href="${createLink(controller: 'user', action: 'profile')}">Profile</a>
+                                        </li>
+                                        <g:if test="${session.user.isAdmin}">
+                                            <li><a href="${createLink(controller: 'user', action: 'admin')}">Users</a>
+                                            </li>
+
+                                            <li><a href="${createLink(controller: 'topic', action: 'creatorTopics')}">Topic</a>
+                                            </li>
+                                            <li><a href="${createLink(controller: 'resource', action: 'creatorPost')}">Post</a>
+                                            </li>
+                                        </g:if>
+                                            <li><a href="/login/logout">Logout</a></li>
+
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        </g:if>
                     </div>
 
                 </div>
@@ -121,14 +157,5 @@
     <g:render template="/resource/createLinkResource"/>
     <g:render template="/subscription/sendInvitation"/>
     <g:layoutBody/>
-
-
-    <asset:stylesheet src="bootstrap.min.css"/>
-    <asset:stylesheet src="bootstrap-theme.min.css"/>
-    <asset:stylesheet src="font-awesome.min.css"/>
-    <asset:javascript src="jquery-2.2.1.min.js"/>
-    <asset:javascript src="bootstrap.min.js"/>
-    <asset:javascript src="application.js"/>
-
 </body>
 </html>

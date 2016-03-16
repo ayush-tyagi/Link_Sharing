@@ -41,7 +41,7 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
         if (countRecords() <= 0) {
-            User user = new User(isAdmin: true,isActive: true, userName:"Krishna" , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Ram", lastName: "Paramhansa", email_id: "tyagiysu@m.com")
+            User user = new User(isAdmin: true,isActive: true, userName:"Krishna" , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Ram", lastName: "Paramhansa", email_id: "ayush.tyagi@tothenew.com")
 //            user.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user)
             User user1 = new User( password: Constants.DEFAULT_PASSWORD,userName:"Madhav", confirmPassword: "abcdef", firstName: "Name", lastName: "Radha", email_id: "tyaysu@am.com")

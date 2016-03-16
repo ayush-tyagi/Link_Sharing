@@ -4,38 +4,31 @@
     </div>
 
     <div class="panel-body">
-        %{--<g:hasErrors bean="${user}">
-            <div class="alert alert-danger">
-                <g:renderErrors bean="${user}" as="list"/>
-            </div>
-        </g:hasErrors>--}%
-        <g:uploadForm class="form-horizontal" controller="user" action="register">
-
+        <g:uploadForm class="form-horizontal" name="validateForm" controller="user" action="register">
             <div class="form-group">
                 <label class="control-label col-xs-4">First Name:</label>
 
                 <div class="col-xs-8">
-                    <g:textField class="form-control" placeholder="Enter First Name" value="${user?.firstName}" name="firstName"/>
+                    <g:textField class="form-control" placeholder="Enter First Name" value="${user?.firstName}"
+                                 name="firstName"/>
                 </div>
 
-                <div class="" role="alert">
-
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;">
                         <g:fieldError field="firstName" bean="${user}">
                         </g:fieldError></span>
                 </div>
             </div>
 
-
-
             <div class="form-group">
                 <label class="pull-left control-label col-xs-4">Last Name:</label>
 
                 <div class="col-xs-8">
-                    <g:textField class="form-control" placeholder="Last Name" value="${user?.lastName}" name="lastName"/>
+                    <g:textField class="form-control" placeholder="Last Name" value="${user?.lastName}"
+                                 name="lastName"/>
                 </div>
 
-                <div class="" role="alert">
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;"><g:fieldError field="lastName" bean="${user}"/></span>
                 </div>
             </div>
@@ -48,7 +41,7 @@
                     <g:textField class="form-control" placeholder="Email" name="email_id" value="${user?.email_id}"/>
                 </div>
 
-                <div class="" role="alert">
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;"><g:fieldError field="email_id" bean="${user}"/></span>
                 </div>
             </div>
@@ -58,10 +51,10 @@
                 <label class="pull-left control-label col-xs-4">UserName:</label>
 
                 <div class="col-xs-8">
-                    <g:textField class="form-control"  name="userName" value="${user?.userName}" placeholder="UserName"/>
+                    <g:textField class="form-control" name="userName" value="${user?.userName}" placeholder="UserName"/>
                 </div>
 
-                <div class="" role="alert">
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;"><g:fieldError field="userName" bean="${user}"/></span>
                 </div>
             </div>
@@ -71,24 +64,25 @@
                 <label class="pull-left control-label col-xs-4">Password:</label>
 
                 <div class="col-xs-8">
-                    <g:passwordField class="form-control" placeholder="Password" value="${user?.password}" name="password"/>
+                    <g:passwordField class="form-control" placeholder="Password" value="${user?.password}"
+                                     name="password"/>
                 </div>
 
-                <div class="" role="alert">
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;"><g:fieldError field="password" bean="${user}"/></span>
                 </div>
             </div>
-
 
 
             <div class="form-group">
                 <label class="pull-left control-label col-xs-4">Confirm Password:</label>
 
                 <div class="col-xs-8">
-                    <g:passwordField class="form-control" placeholder="Confirm Password" value="${user?.confirmPassword}" name="confirmPassword"/>
+                    <g:passwordField class="form-control" placeholder="Confirm Password"
+                                     value="${user?.confirmPassword}" name="confirmPassword"/>
                 </div>
 
-                <div class="" role="alert">
+                <div class="msg" role="alert">
                     <span style="color: red;float:right;"><g:fieldError field="confirmPassword" bean="${user}"/></span>
                 </div>
             </div>
@@ -110,12 +104,14 @@
                 <label class="control-label col-xs-6">
                     <a href="#" style="text-decoration:underline;text-align:center"></a>
                 </label>
+
                 <div class="col-xs-12"><div class="col-xs-4"></div>
+
                     <div class="col-xs-8">
-                <g:submitButton class="form-control btn btn-primary active" name="submit" value="Register"
-                                style="color:black;border:solid  #0000ff;border-radius:3px;color:whitesmoke ; "/>
+                        <g:submitButton class="form-control btn btn-primary active" name="submit" value="Register"
+                                        style="color:black;border:solid  #0000ff;border-radius:3px;color:whitesmoke ; "/>
                     </div>
-            </div>
+                </div>
             </div>
 
         </g:uploadForm>
