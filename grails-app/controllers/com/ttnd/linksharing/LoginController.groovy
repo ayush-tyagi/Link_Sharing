@@ -3,6 +3,7 @@ package com.ttnd.linksharing
 class LoginController {
     def mailService
 
+
     def index() {
         User user = session.user
         if (user) {
@@ -77,4 +78,12 @@ class LoginController {
             render "Password does not match with confirm password"
         }
     }
+
+    /*def triggerMail() {
+        if( UnreadItemEmailJob.triggerNow()){
+    render "Success"
+        }else{
+            render "Failure"
+        }
+    }*/
 }
