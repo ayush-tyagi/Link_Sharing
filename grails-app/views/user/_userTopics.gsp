@@ -16,12 +16,21 @@
                               class="img img-responsive img-thumbnail"/>
             </div>
                 <div class="hide" id="changeTopic" width="200px;">
-                    <g:textField class="form-control" id="textTopicName"  name="topicName"/>
+                    <g:textField class="form-control" id="textTopicName"  name="topicName" value="Change"/>
 
                     <button class="form-control btn btn-primary active"
                                     name="Change"
                                     onclick="changeTopicNameByButton(${topics.id})"
-                                    style="color:black;border:solid #0000ff;border-radius:3px;color:whitesmoke;"></button>
+                                    >
+
+                </button>
+
+                    <button class="form-control btn btn-primary active"
+                            name="HideEdit"
+                            onclick="hideEdit()"
+                            ></button>
+
+
                 </div>
 
             <div class="col-xs-10">${topics.name}<span class="text-muted"><br>@Uday<br>

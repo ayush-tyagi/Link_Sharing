@@ -55,6 +55,13 @@
                     name="Change"
                     onclick="changeResourceDescription(${resource.id})"
                     style="color:black;border:solid #0000ff;border-radius:3px;color:whitesmoke;"></button>
+            <button class="form-control btn btn-primary active"
+                    name="HideEditResource"
+                    onclick="hideEditResource()"
+                    style="color:black;border:solid #0000ff;border-radius:3px;color:whitesmoke;"></button>
+
+
+
         </div>
 
 

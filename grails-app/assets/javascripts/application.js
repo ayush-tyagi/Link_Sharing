@@ -139,6 +139,9 @@ function changeTopicName() {
 
     //alert("Clicked")
 }
+function  hideEdit(){
+$("#changeTopic").addClass("hide")
+}
 
 function changeTopicNameByButton(id) {
     var topicName = $("#textTopicName").val();
@@ -174,6 +177,10 @@ function searchTopic() {
 function unhideResourceDescription() {
     $("#changeDescription").removeClass("hide")
 //alert("Clicked")
+}
+
+function hideEditResource(){
+    $("#changeDescription").addClass("hide")
 }
 
 function changeResourceDescription(id) {
