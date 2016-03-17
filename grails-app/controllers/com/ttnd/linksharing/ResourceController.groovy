@@ -67,9 +67,9 @@ class ResourceController {
         if (resource) {
             if (Resource.executeUpdate("update Resource as r set r.description=:desc where r.id=${resource.id}",
                     [desc: resourceDesc])) {
-                render([message: "You have changed Resource Description successfully"] as JSON)
+                render([message: "You have changed Resource Description successfully",resourceDescription:resourceDesc] as JSON)
             }
-            render([message: "You have changed Resource Description successfully"] as JSON)
+            render([message: "You have changed Resource Description successfully",resourceDescription:resourceDesc] as JSON)
         } else {
             render([message: "You cannot changed Resource Description"] as JSON)
         }

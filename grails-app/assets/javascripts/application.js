@@ -9,6 +9,16 @@
  })(jQuery);
  }*/
 
+function showErrorAndSuccess(msg, error) {
+    var className = "";
+    if (msg != undefined && msg != "") {
+        className = "alert-success";
+    }
+    if (error != undefined && error != "") {
+        className = "alert-danger";
+    }
+    $(".messageAlert").html(error).removeClass("hide").addClass(className);
+};
 
 function unsubscribe(topicId) {
     event.preventDefault();
@@ -19,28 +29,9 @@ function unsubscribe(topicId) {
         data: {topicId: topicId},
         method: 'post',
         success: function (data) {
-            console.log(data);
-            //$('#ajaxifiedSubscription').replaceWith($('#ajaxifiedSubscription').html(data));
             $("#subscribedTopics").html(data);
-            var messageAlert = $(".messageAlert");
-            for (item in data) {
-                if (item != "error") {
-                    messageAlert.text = "You have unsubscribed Successfully";
-                    messageAlert.addClass("alert-success")
-                } else {
-                    messageAlert.text = "Error";
-                    messageAlert.addClass("alert-danger")
-                }
-            }
-            myLoader.hide()
-            $("#alert").html(messageAlert.text).removeClass("hide")
-            //    $("#alert").css({'display':'block'})
-
-        },
-        error: function (data) {
-            $("#subscribedTopics").html(data.message);
         }
-    })
+    });
 
 }
 
@@ -52,7 +43,7 @@ function deactivateUser(id) {
         method: 'post',
         success: function (data) {
             $(".myUser").html(data);
-            alert(data.message)
+            showErrorAndSuccess(data.message, "");
         }
     })
 }
@@ -64,7 +55,7 @@ function activateUser(id) {
         data: {id: id},
         method: 'post',
         success: function (data) {
-            alert(data.message)
+            showErrorAndSuccess(data.message, "");
         }
     })
 }
@@ -77,17 +68,10 @@ function subscribe(topicId) {
         data: {topicId: topicId},
         method: 'post',
         success: function (data) {
-            alert(data.message)
-            $("#subscribedTopics").html(data);
-            var messageAlert = $(".messageAlert");
-            for (item in data) {
-                if (item != "error") {
-                    messageAlert.text = "You have Subscribed Successfully";
-                    messageAlert.addClass("alert-success")
-                } else {
-                    messageAlert.text = "Error";
-                    messageAlert.addClass("alert-danger")
-                }
+            if (data.error != "") {
+                showErrorAndSuccess('', data.error);
+            } else {
+                $("#subscribedTopics").html(data);
             }
         },
         error: function (data) {
@@ -139,8 +123,8 @@ function changeTopicName() {
 
     //alert("Clicked")
 }
-function  hideEdit(){
-$("#changeTopic").addClass("hide")
+function hideEdit() {
+    $("#changeTopic").addClass("hide")
 }
 
 function changeTopicNameByButton(id) {
@@ -151,8 +135,7 @@ function changeTopicNameByButton(id) {
         data: {topicName: topicName, id: id},
         method: 'post',
         success: function (data) {
-            alert(data.message)
-
+            $(".createdTopicOfUser").html(data);
 
         }
     })
@@ -167,7 +150,7 @@ function searchTopic() {
         data: {q: q},
         method: 'post',
         success: function (data) {
-            alert(data.message)
+            //alert(data.message)
             $("#topicContent").html(data)
         }
     })
@@ -179,7 +162,7 @@ function unhideResourceDescription() {
 //alert("Clicked")
 }
 
-function hideEditResource(){
+function hideEditResource() {
     $("#changeDescription").addClass("hide")
 }
 
@@ -191,7 +174,9 @@ function changeResourceDescription(id) {
         data: {resourceDesc: resourceDesc, id: id},
         method: 'post',
         success: function (data) {
-            alert(data.message)
+            //alert(data.message)
+            $("#retainDesc").html(data.resourceDescription);
+            hideEditResource();
         },
         error: function (data) {
             alert(data.message)
@@ -199,6 +184,38 @@ function changeResourceDescription(id) {
     })
 
 }
+
+function markAsRead(id) {
+    //alert(id)
+    var messageAlert = $(".messageAlert");
+    $.ajax({
+        url: '/readingItem/changeToIsRead',
+        data: {id: id},
+        method: 'post',
+        success: function (data) {
+            //alert("Called mark as read")
+            $("#markAsRead").html(data)
+            //messageAlert
+            messageAlert.text("You have successFully changed ")
+            messageAlert.addClass("alert-Success").removeClass("hide")
+        }
+    })
+}
+
+
+function markAsUnread(id) {
+    //alert(id)
+    $.ajax({
+        url: '/readingItem/changeToUnread',
+        data: {id: id},
+        method: 'post',
+        success: function (data) {
+            //alert("Called mark as Unread")
+            $("#markAsRead").html(data)
+        }
+    })
+}
+
 /*
  function success1(data) {
  alert(data.message)

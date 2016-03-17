@@ -134,7 +134,7 @@ class UserController {
 
 
     def subscriptions(Long id) {
-        println "---------------->>>>>>>>>>>>>${id}"
+//        println "---------------->>>>>>>>>>>>>${id}"
         TopicSearchCo topicSearchCo = new TopicSearchCo(id: id)
 
         if (session.user) {

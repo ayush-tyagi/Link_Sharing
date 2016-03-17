@@ -51,7 +51,7 @@ class TopicController {
 
     def creatorTopics() {
         User user = session.user
-        List<Topic> topics = Topic.findAllByCreatedBy(user)
+        List<Topic> topics = Topic.findAllByCreatedBy(user,[sort:'lastUpdated',order:'desc'])
         render(view: '/topic/creatorTopic', model: [topics: topics])
     }
 
@@ -72,7 +72,7 @@ class TopicController {
 //             println  "--------------->>>>inside if ${topics}"
             render(view: '/readingItem/_readingItemsInbox', model: [readingItems: readingItems])
         } else {
-            render([message: "${user}"] as JSON)
+            render([message: "Not Found"] as JSON)
         }
     }
 
@@ -84,6 +84,15 @@ class TopicController {
         Topic topic = new Topic(name: topicName, createdBy: user, visibility: L_Visibility.valueOf(visibility))
         if (topic.validate()) {
             topic.save(flush: true)
+            Subscription subscription = new Subscription(user: user,topic:topic )
+            subscription.save(flush: true)
+
+            List<User> users = User.list()
+            users.each{ useri ->
+                useri.addToReadingItems(isRead: false,user: user)
+            }
+
+
             flash.message = "Success"
             render "Success"
         } else {
@@ -133,13 +142,16 @@ class TopicController {
     }
 
     def changeTopicName(String topicName, Long id) {
-//       println "==============>>>>>>>${id} -------------->>>>>>${topicName}"
-        Topic topic = Topic.get(id)
-//       println "----------------->>>>>>>>>>${topic}"
-        if (Topic.executeUpdate("update Topic as t set t.name=:name where t.id=${topic.id}", [name: topicName])) {
-            render([message: "changed succesfully "] as JSON)
+        println "=====>>>${topicName}========>>>>${id}"
+        if (topicService.changeTopicName(topicName,id)) {
+//            flash.message="abc"
+//            render(view: 'user/profile')
+            User user = session.user
+            List<Topic> subscribedTopics = User.getSubscribedTopics(user)
+            render(template: "/user/createdTopicsOfUser" ,model: [subscribedTopics: subscribedTopics,user:user])
+
         } else {
-            render([message: "Oops something went wrong "] as JSON)
+            render([error: "Oops something went wrong "] as JSON)
         }
     }
 

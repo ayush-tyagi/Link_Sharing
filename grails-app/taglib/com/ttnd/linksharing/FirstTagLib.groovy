@@ -43,7 +43,8 @@ class FirstTagLib {
 
     def isLinkOrDoc = { attrs, body ->
         if (Resource.isLinkResourceOrDocResource(attrs.id) == "LinkResource") {
-            out << "<a href='www.google.com' target=\"_blank\" style=\"text-decoration:underline;font-size:13px\"> Link </a>"
+            LinkResource linkResource = Resource.get(attrs.id)
+            out << "<a href=\"${linkResource.url}\" target=\"_blank\" style=\"text-decoration:underline;font-size:13px\"> Link </a>"
         } else if (Resource.isLinkResourceOrDocResource(attrs.id) == "DocumentResource") {
             String ref = createLink(controller: 'documentResource', action: 'download', params: [id: attrs.id])
             out << "<a href=${ref} > Download </a>"
@@ -61,13 +62,15 @@ class FirstTagLib {
 
     def markAsRead = { attrs, body ->
         if (session.user) {
-            String ref = createLink(controller: 'readingItem', action: 'changeIsRead', params: [resourceId: attrs.id,
-                                                                                                isRead    : !attrs.isRead])
+           /* String ref = createLink(controller: 'readingItem', action: 'changeIsRead', params: [resourceId: attrs.id,
+                                                                                             isRead    : !attrs.isRead])
+            */
             if (!attrs.isRead) {
-                out << "<a href=${ref}>Mark as Read</a>"
-            } /*else {
-                out << "vishal"
-            }*/
+                out << render(template: '/readingItem/markAsRead',model: [resourceId:attrs.id])
+            } else {
+                out << render(template: '/readingItem/markAsUnread',model: [resourceId:attrs.id])
+            }
+
         }
 
     }

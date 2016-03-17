@@ -68,7 +68,7 @@ class User {
     }*/
 
     static List<Topic> getSubscribedTopics(User user) {
-        List<Topic> list = Subscription.createCriteria().list() {
+        List<Topic> list = Subscription.createCriteria().list([sort:'lastUpdated',order:'desc']) {
             projections {
                 distinct('topic')
             }

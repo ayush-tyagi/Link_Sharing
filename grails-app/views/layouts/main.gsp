@@ -18,6 +18,16 @@
     <asset:javascript src="bootstrap.min.js"/>
     <asset:javascript src="application.js"/>
 
+    <script>
+        var msg = "${flash.message}";
+        var error = "${flash.error}";
+        console.log(msg);
+        $(document).ready(function () {
+            showErrorAndSuccess(msg, error);
+        });
+
+    </script>
+
 
     <style>
 
@@ -56,18 +66,18 @@
                            style="font-size:28px;color:  #0000ff">Link Sharing</a>
                     </div>
                     <g:if test="${session.user}">
-                    <div class="col-xs-3">
-                        <g:form controller="resource" action="search" class="navbar-form">
-                            <div class="input-group">
-                                <g:textField type="text" class="form-control" placeholder="Search" name="q"
-                                             id="srch-term"/>
-                                <div class="input-group-btn">
-                                    <g:submitButton name="searchSubmit" class="btn btn-primary" type="submit"
-                                                    value="Search"/>
+                        <div class="col-xs-3">
+                            <g:form controller="resource" action="search" class="navbar-form">
+                                <div class="input-group">
+                                    <g:textField type="text" class="form-control" placeholder="Search" name="q"
+                                                 id="srch-term"/>
+                                    <div class="input-group-btn">
+                                        <g:submitButton name="searchSubmit" class="btn btn-primary" type="submit"
+                                                        value="Search"/>
+                                    </div>
                                 </div>
-                            </div>
-                        </g:form>
-                    </div>
+                            </g:form>
+                        </div>
                     </g:if>
                     <g:else>
                         <div class="col-xs-3" style="float: right;">
@@ -134,7 +144,7 @@
                                             <li><a href="${createLink(controller: 'resource', action: 'creatorPost')}">Post</a>
                                             </li>
                                         </g:if>
-                                            <li><a href="/login/logout">Logout</a></li>
+                                        <li><a href="/login/logout">Logout</a></li>
 
                                     </ul>
                                 </div>
@@ -149,7 +159,7 @@
     </div>
 
     <div class="container-fluid">
-        <div class="hide messageAlert" id="alert" style="text-align: center; height:50px;padding-top: 20px;"></div>
+        <div class="hide messageAlert" id="alert" style="display:block;text-align: center; height:50px;padding-top: 20px;"></div>
     </div>
     <g:render template="/topic/create"/>
     <g:render template="/topic/email"/>

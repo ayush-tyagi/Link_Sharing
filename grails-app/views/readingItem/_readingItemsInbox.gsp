@@ -12,7 +12,7 @@
     <div class="col-xs-10">${item.user}<span class="text-muted">@${item.user}</span><span class="pull-right"><a
             href="#">${item}</a></span>
 
-        <p>".${item.resource}.."<br></p>
+        <p id="RetainedDescription">${item.resource.topic.name}<br></p>
 
         <div class="col-xs-2"><i class="fa fa-facebook-official" style="color: #0000ff;"></i>
             <i class="fa fa-tumblr" style="color: #0000ff;"></i>
@@ -25,7 +25,7 @@
         <div class="col-xs-3"><a href="/" style="text-decoration:underline;font-size:10px">View full site</a>
         </div>
 
-        <div class="col-xs-3">
+        <div class="col-xs-3" id="markAsRead">
             %{--<a href="#" style="text-decoration:underline;font-size:10px">--}%
             %{--<my:showMarkReadLink id="${item.id}"/>--}%
 

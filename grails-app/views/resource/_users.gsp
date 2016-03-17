@@ -33,12 +33,15 @@
             <span class="col-xs-4" style="color:blue;padding-left:1px">50</span>
 
         </div>
+
         <h3>Description:</h3>
-        <p>  ${resource.description}</p>
+
+        <p id="retainDesc">${resource.description}</p>
+
         <div class="col-xs-12">
             <div class="col-xs-3"><i class="fa fa-facebook-official" style="color: #0000ff;"></i></div>
 
-            <div class="col-xs-3"><i class="fa fa-tumblr"  style="color: #0000ff;"></i></div>
+            <div class="col-xs-3"><i class="fa fa-tumblr" style="color: #0000ff;"></i></div>
 
             <div class="col-xs-3"><i class="fa fa-google-plus" style="color: red"></i>
             </div>
@@ -47,20 +50,23 @@
         <br>
 
 
-
         <div class="hide" id="changeDescription" width="200px;">
-            <g:textField class="form-control" id="textDescription"  name="topicName"/>
-
-            <button class="form-control btn btn-primary active"
-                    name="Change"
-                    onclick="changeResourceDescription(${resource.id})"
-                    style="color:black;border:solid #0000ff;border-radius:3px;color:whitesmoke;"></button>
-            <button class="form-control btn btn-primary active"
-                    name="HideEditResource"
-                    onclick="hideEditResource()"
-                    style="color:black;border:solid #0000ff;border-radius:3px;color:whitesmoke;"></button>
-
-
+            <g:textField class="form-control" id="textDescription" placeholder="type new description here . . ."
+                         name="topicName"/>
+            <span style="display: inline-block;width: 210px;">
+                <g:actionSubmit class="form-control btn btn-info active"
+                                value="Change Description"
+                                name="Change"
+                                onclick="changeResourceDescription(${resource.id})"
+                                style="width: 220px;"/>
+            </span>
+            <span style="display: inline-block;width: 210px;">
+                <g:actionSubmit class="form-control btn btn-danger active"
+                                value="Cancel"
+                                name="HideEditResource"
+                                onclick="hideEditResource()"
+                                style="width: 220px;"/>
+            </span>
 
         </div>
 

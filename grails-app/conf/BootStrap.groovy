@@ -98,7 +98,7 @@ class BootStrap {
                 2.times
                         {
                             Resource documentResource = new DocumentResource(contentType:Constants.DOCUMENT_CONTENT_TYPE , description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
-                            Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "http://www.someurl.com")
+                            Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "https://www.google.co.in/")
 
                             if (documentResource.validate() && linkResource.validate()) {
                                 linkResource.save(flush: true)

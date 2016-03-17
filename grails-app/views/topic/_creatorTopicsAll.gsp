@@ -4,14 +4,14 @@
               id="sdsdh" optionKey="${id}" style="width:200px;float:right;padding: 0px;" from="${}"/>
     </div>
 
-    <div class="panel-body" style="overflow-y: auto;height: 330px;">
+    <div class="panel-body" style="overflow-y: auto;height: 450px;">
         <g:each in="${topics}" var="item">
             <div class="col-xs-2">
                 <my:userImage  width="64px" height="64px"
                                class="img img-responsive img-thumbnail"/>
             </div>
 
-            <div class="col-xs-10">Last Updated -${item.lastUpdated}<span class="text-muted">@${item.createdBy}</span><span class="pull-right"><a
+            <div class="col-xs-10">Last Updated -${item.lastUpdated}<span class="text-muted">@${item.createdBy.userName}</span><span class="pull-right"><a
                     href="#">${item}</a></span>
 
                 <p>".${item.name}.."<br></p>

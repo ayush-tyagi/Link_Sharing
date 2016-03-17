@@ -16,8 +16,9 @@ class SubscriptionController {
         if (subscription.validate()) {
             subscription.save(flush: true)
 //            flash.message = "Saved successfully"
-            render([message: "Saved successfull"] as JSON)
+//            render([message: "Saved successfull"] as JSON)
 // redirect(controller: "user",action: "index")
+            render(template: '/subscription/normalUser' ,model: [topicId:topic.id ])
         } else {
             flash.error = "Unsuccessful to save"
 //            render "${subscription.errors.allErrors}"
@@ -26,7 +27,6 @@ class SubscriptionController {
     }
 
     def update(Long id, String seriousness) {                           //,Seriousness seriousness
-        println "-----------------<<<<<<>>>>>>>${params}"
         if (id) {
             Subscription subscription = Subscription.get(id)
             if (subscription) {
@@ -38,7 +38,7 @@ class SubscriptionController {
                     render([error: 'Fail to update'] as JSON)
                 }
             } else {
-                render([error: 'Fail to update'] as JSON)
+                render([error: 'Subscription does not exists'] as JSON)
             }
         }
     }
@@ -51,7 +51,7 @@ class SubscriptionController {
             if (!user.equalSessionUser(topicId)) {
                 subscription.delete(flush: true)
                 List<Topic> subscribedTopics = User.getSubscribedTopics(user)
-                render(template: 'subscribedTopics', model: [subscribedTopics: subscribedTopics])
+                render(template: '/subscription/subscribedTopics', model: [subscribedTopics: subscribedTopics])
 //                render([message :"Delete successfull",status:true] as JSON)
 //            flash.message ="Deleted Successfully"
 //            redirect(controller: "user" ,action:"index" )
@@ -61,7 +61,7 @@ class SubscriptionController {
         } else {
 //            flash.error = "Not Deleted"
 //            render "User not Found  "
-            render([error: "Cannot be deleted"] as JSON)
+            render([error: "Subscription does not exists anymore . . ."] as JSON)
         }
     }
 }

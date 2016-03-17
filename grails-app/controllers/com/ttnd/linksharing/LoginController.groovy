@@ -22,17 +22,13 @@ class LoginController {
         if (user) {
             if (user.isActive) {
                 session.user = user
-                redirect(action: "index")
             } else {
-                println "---------Hello else active"
-                flash.message = "Your account is not active.."
-                render flash.message
+                flash.error = "Your account is not active.."
             }
         } else {
-            println "---------Hello else out active"
-            flash.message = "User not Found.."
-            render flash.message
+            flash.error = "User not Found.."
         }
+        redirect(action: "index")
 //
 //        List<Resource> resources1 = Resource.getTopPosts()
 //        render view:'index',model: [resources1:resources1]

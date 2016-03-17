@@ -74,4 +74,18 @@ class TopicService {
         }
         return null
     }
+
+    Boolean changeTopicName(String name,Long id){
+    Topic topic = Topic.get(id)
+        Boolean retun
+        if(topic){
+            topic.name=name
+            topic.save(flush: true)
+            println "inside if"
+            retun = true
+        }else {
+            retun = false
+        }
+        return retun
+    }
 }

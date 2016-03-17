@@ -31,8 +31,7 @@
 
                         <div class="col-xs-4">
                             <g:actionSubmit class="form-control btn btn-default active" value="save" id="submit"
-                                            formaction="/topic/save type="button" name="submit">
-                            </g:actionSubmit>
+                                            formaction="/topic/save" type="button" name="submit"/>
                             %{--<input type="Login" class="form-control btn btn-default active" id="submit" placeholder="Save" style="color:black;border:solid black;border-radius:7px">--}%
                         </div>
 
