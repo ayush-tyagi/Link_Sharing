@@ -51,7 +51,7 @@ class TopicController {
 
     def creatorTopics() {
         User user = session.user
-        List<Topic> topics = Topic.findAllByCreatedBy(user,[sort:'lastUpdated',order:'desc'])
+        List<Topic> topics = Topic.findAllByCreatedBy(user, [sort: 'lastUpdated', order: 'desc'])
         render(view: '/topic/creatorTopic', model: [topics: topics])
     }
 
@@ -77,28 +77,18 @@ class TopicController {
     }
 
     def save(String topicName, String visibility) {
-        log.info topicName
-        log.info visibility
         User user = session.user
-        log.info user
         Topic topic = new Topic(name: topicName, createdBy: user, visibility: L_Visibility.valueOf(visibility))
         if (topic.validate()) {
-            topic.save(flush: true)
-            Subscription subscription = new Subscription(user: user,topic:topic )
+            topic.save(flush: true, failOnError: true)
+            Subscription subscription = new Subscription(user: user, topic: topic)
             subscription.save(flush: true)
-
-            List<User> users = User.list()
-            users.each{ useri ->
-                useri.addToReadingItems(isRead: false,user: user)
-            }
-
-
-            flash.message = "Success"
-            render "Success"
+            println "------->>>in"
+            render([message: " Topic created successfully "] as JSON)
         } else {
             flash.error = "Error on topic"
-            render flash.error
-            log.error("${topic.errors.allErrors}")
+            println "------->>>out"
+            render([error: " Topic cannot be created "] as JSON)
         }
     }
 
@@ -142,13 +132,10 @@ class TopicController {
     }
 
     def changeTopicName(String topicName, Long id) {
-        println "=====>>>${topicName}========>>>>${id}"
-        if (topicService.changeTopicName(topicName,id)) {
-//            flash.message="abc"
-//            render(view: 'user/profile')
+        if (topicService.changeTopicName(topicName, id)) {
             User user = session.user
             List<Topic> subscribedTopics = User.getSubscribedTopics(user)
-            render(template: "/user/createdTopicsOfUser" ,model: [subscribedTopics: subscribedTopics,user:user])
+            render(template: "/user/createdTopicsOfUser", model: [subscribedTopics: subscribedTopics, user: user])
 
         } else {
             render([error: "Oops something went wrong "] as JSON)
@@ -156,15 +143,16 @@ class TopicController {
     }
 
     def invite(String topicName, String email) {
+        println "---------->>>${topicName}==========>>>${email}"
         if (topicName && email) {
-            Topic topic =Topic.findByName(topicName)
+            Topic topic = Topic.findByName(topicName)
             if (topicService.invite(topic.name, email)) {
-                flash.message = "Invitation Sent"
+                render([message:"Email is sent for an Invitation"]as JSON)
             } else {
-                flash.error = "Invitation not Sent"
+                render([error:"Email cannot be sent"]as JSON)
             }
         }
-        redirect(controller: 'login', action: 'index')
+//        redirect(controller: 'login', action: 'index')
     }
 
     def join(Long id) {

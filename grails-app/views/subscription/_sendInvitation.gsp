@@ -8,29 +8,27 @@
 
             <div class="modal-body">
 
-                <g:uploadForm class="form-group"  controller="topic" action="invite">
+                <g:form class="form-group">
                     <label class="control-label col-xs-4">Email*</label>
 
                     <div class="col-xs-8">
-                        <g:textField type="email" name="email" class="form-control" id="link" placeholder="Email*"/>
+                        <g:textField type="email" name="email" class="form-control" id="email" placeholder="Email*"/>
                     </div>
-<br>
-                        <label class="col-xs-2">Topic:</label>
+                    <br>
+                    <label class="col-xs-2">Topic:</label>
 
-                        <div class="col-xs-8 pull-right">
-                            <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName" id="doctopic"
-                                      style="width:200px; " from="${subscribedTopics}"/>
+                    <div class="col-xs-8 pull-right">
 
+                        <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName"
+                                  id="topicNameSelect"
+                                  style="width:200px; " from="${subscribedTopics}"/>
 
+                        <g:actionSubmit value="Invite" type="submit"
+                                        class="form-control btn btn-default active"
+                                        id="inviteEmail"/>
+                    </div>
 
-                            <g:submitButton type="submit" name="Invite"
-                                            class="form-control btn btn-default active" id="submit"
-                                            style="color:red;border:solid black;border-radius:3px"/>
-                        </div>
-
-
-
-                </g:uploadForm>
+                </g:form>
             </div>
 
             <div class="modal-footer">
@@ -39,3 +37,4 @@
         </div>
     </div>
 </div>
+

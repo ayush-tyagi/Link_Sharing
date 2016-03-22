@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import com.ttnd.linksharing.co.LinkResourceCo
+import grails.converters.JSON
 
 class LinkResourceController extends ResourceController{
 
@@ -16,10 +17,9 @@ class LinkResourceController extends ResourceController{
         if (linkResource.validate()) {
             linkResource.save(flush: true)
             //pushReadingItems(linkResource)
-            render "Successful Save"
+            render ([message:"Successfully saved"]as JSON)
         } else {
-
-            render linkResource.errors
+            render ([error:"Resource cannot be saved"]as JSON)
         }
     }
 

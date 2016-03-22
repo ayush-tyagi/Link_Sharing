@@ -22,12 +22,8 @@ class UserController {
 
     def index() {
         User user = session.user
-//        User user = User.get(id)
-        //render "User DashBoard ${session} ${user} ${user.userName}"
         List<Topic> topicNames = Topic.getTopicsOfUser(user)
-//        List<TopicVo> trendingTopics = Topic.getTrendingTopics()
         int numberOfSubscription = Subscription.countByUser(user)
-//        println "----------------->>>>${numberOfSubscription}"
         List<Topic> subscribedTopics = User.getSubscribedTopics(user)
         List<ReadingItem> readingItems = ReadingItem.findAllByUser(user, [sort: "dateCreated", order: "desc"])
         render(view: 'dashboard',
@@ -48,7 +44,6 @@ class UserController {
     }
 
     def update(UserCo userCo) {
-//        println "================<<<<<<<<>>>>>>>>${params}        ----------->${userCo.photo}"
         User user = session.user
         session.user = null
         User user1 = user.get(user.id)
@@ -57,18 +52,18 @@ class UserController {
             user1.lastName = userCo.lastName
             user1.userName = userCo.userName
             if (userCo.photo) {
-//                println "===============>>>>>>>>>>>>${userCo.photo}"
                 user1.photo = userCo.photo.bytes
             }
             if (user1.validate()) {
                 user1.save(flush: true)
                 session.user = user1
-                render("Success")
+                flash.message = "Successful updation"
+                redirect(controller: 'user',action: 'profile')
             } else {
-                render("Can't validate")
+                flash.error = "Unsuccessful try"
             }
         } else {
-            render "User not found"
+            flash.error = "User not found"
         }
     }
 
@@ -86,6 +81,7 @@ class UserController {
                 flash.message = "Success"
                 forward(controller: 'login', action: 'loginHandler', params: [userName: user.userName, password: user.password])
             } else {
+                flash.error = "Not saved"
                 flash.error = "Not saved"
             }
         } else {

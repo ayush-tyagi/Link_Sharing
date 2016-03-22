@@ -8,7 +8,7 @@
             </div>
 
             <div class="modal-body">
-                <g:form class="form-horizontal" controller="topic" action="save">
+                <g:form class="form-horizontal">
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="topicName">Name:</label>
@@ -30,8 +30,8 @@
                         <div class="col-xs-4"></div>
 
                         <div class="col-xs-4">
-                            <g:actionSubmit class="form-control btn btn-default active" value="save" id="submit"
-                                            formaction="/topic/save" type="button" name="submit"/>
+                            <a class="form-control btn btn-default active submitThis" id="submitThis"
+                               name="submit">save</a>
                             %{--<input type="Login" class="form-control btn btn-default active" id="submit" placeholder="Save" style="color:black;border:solid black;border-radius:7px">--}%
                         </div>
 

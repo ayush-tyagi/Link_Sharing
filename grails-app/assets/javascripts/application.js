@@ -13,12 +13,88 @@ function showErrorAndSuccess(msg, error) {
     var className = "";
     if (msg != undefined && msg != "") {
         className = "alert-success";
+        $(".messageAlert").html(msg).removeClass("hide").addClass(className);
     }
     if (error != undefined && error != "") {
         className = "alert-danger";
+        $(".messageAlert").html(error).removeClass("hide").addClass(className);
     }
-    $(".messageAlert").html(error).removeClass("hide").addClass(className);
 };
+
+
+$(document).ready(function () {
+    $("#submitThis").on("click", function (e) {
+        e.preventDefault();
+        var topicName = $("#topicName").val();
+        var visibility = $("#visibility" + " :selected").attr('value');
+        console.log("Calling");
+        $.ajax({
+            url: '/topic/save',
+            data: {topicName: topicName, visibility: visibility},
+            method: 'post',
+            success: function (data) {
+                //alert("Success..");
+                //console.log(data);
+                $("#myModal4").modal("hide");
+                showErrorAndSuccess(data.message,"");
+            },
+            error: function (data) {
+                //console.log(data);
+                showErrorAndSuccess("",data.error);
+            }
+        });
+        //return false;
+    });
+});
+
+
+
+$(document).ready(function (){
+    $("#inviteEmail").on("click",function(e){
+        e.preventDefault();
+        var email = $("#email").val();
+         var topicName = $("#topicNameSelect" + " :selected").attr('value');
+        $.ajax({
+         url:'/topic/invite',
+            data:{topicName:topicName,email:email},
+            post:'post',
+            success: function (data){
+                $("#myModal14").modal("hide");
+             showErrorAndSuccess(data.message,"");
+            },
+            error: function(data){
+                $("#myModal14").modal("hide");
+                showErrorAndSuccess("",data.error);
+            }
+        });
+    });
+});
+
+
+
+$(document).ready(function () {
+    $("#createLinkResource").on("click",function(e) {
+        e.preventDefault();
+        var description = $("#commentDescription").val();
+        var topicName = $("#topicsNameOfUser"+" :selected").attr('value');
+        var link = $("#link").val();
+        $.ajax({
+           url:'/linkResource/save',
+            data:{link:link,description:description,topicName:topicName},
+            method:'post',
+            success: function (data){
+                $("#myModal2").modal("hide");
+            showErrorAndSuccess(data.message,"");
+        },
+            error: function (data) {
+                $("#myModal2").modal("hide");
+                showErrorAndSuccess("",data.error);
+            }
+        });
+
+    });
+});
+
 
 function unsubscribe(topicId) {
     event.preventDefault();

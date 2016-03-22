@@ -159,7 +159,10 @@
     </div>
 
     <div class="container-fluid">
-        <div class="hide messageAlert" id="alert" style="display:block;text-align: center; height:50px;padding-top: 20px;"></div>
+        <div class="hide messageAlert" id="alert"
+             style="display:block;text-align:left;height:50px;padding-top: 20px;">
+
+        </div>
     </div>
     <g:render template="/topic/create"/>
     <g:render template="/topic/email"/>

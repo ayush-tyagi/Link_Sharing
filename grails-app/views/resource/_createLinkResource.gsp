@@ -7,8 +7,8 @@
             </div>
             <div class="modal-body">
 
-                <g:form class="form-horizontal" controller="linkResource" action="save"
-                        params="[subscribedTopics:subscribedTopics]">
+                <g:form class="form-horizontal">
+                    %{--params="[subscribedTopics:subscribedTopics]"--}%
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" >Link:</label>
@@ -20,7 +20,7 @@
         <label class="control-label col-xs-4">Description:</label>
 
         <div class="col-xs-8">
-            <g:textArea name="description" placeholder="Description" id="comment"/>
+            <g:textArea name="description" placeholder="Description" id="commentDescription"/>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
 
         <div class="col-xs-8">
             <g:select class="btn dropdown-toggle" data-toggle="dropdown" name="topicName"
-                      id="doctopic" style="width:200px; " from="${subscribedTopics*.name}"/>
+                      id="topicsNameOfUser" style="width:200px; " from="${subscribedTopics*.name}"/>
 
         </div>
     </div>
@@ -39,15 +39,12 @@
         <div class="col-xs-4"></div>
 
         <div class="col-xs-4">
-            <g:submitButton type="submit" name="submit"
-                            class="form-control btn btn-default active" id="submit" placeholder="Share"
-                            style="color:black;border:solid black;border-radius:7px"/>
+            <a type="submit" name="submit"
+                            class="form-control btn btn-primary active"
+                            id="createLinkResource">Create</a>
         </div>
 
-        <div class="col-xs-4">
-            <g:submitButton name="cancel" type="Login" class="form-control btn btn-default active" id="cancel"
-                            placeholder="Cancel" style="color:black;border:solid black;border-radius:7px"/>
-        </div>
+
     </div>
 
     </g:form>

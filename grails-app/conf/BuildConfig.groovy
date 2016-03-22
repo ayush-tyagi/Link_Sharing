@@ -78,6 +78,8 @@ grails.project.dependency.resolution = {
 //        compile "org.grails.plugins:jquery-validation-ui:1.4.9"
 
         compile "org.grails.plugins:quartz:1.0.2"
+//        compile "org.grails.plugins:spring-security-core:2.0.0"
+        test "org.grails.plugins:code-coverage:2.0.3-3"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
