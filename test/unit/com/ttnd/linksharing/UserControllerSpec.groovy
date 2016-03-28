@@ -23,7 +23,7 @@ class UserControllerSpec extends Specification {
 
     def"Testing Index action"(){
         setup:""
-        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: "Aakash")
+        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", username: "Aakash")
         when:""
         controller.index(user.id)
         then:""

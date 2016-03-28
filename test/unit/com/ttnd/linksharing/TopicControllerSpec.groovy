@@ -31,7 +31,7 @@ class TopicControllerSpec extends Specification {
 
      def "show method test"(){
         setup:""
-        User user = new User(userName: "bHelo",isActive:true , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+        User user = new User(username: "bHelo",isActive:true , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
 
         Topic topic = new Topic(name:'Krishna',visibility: L_Visibility.PUBLIC,id:1,createdBy: user)
          topic.save(flush:true)

@@ -68,7 +68,7 @@ class UserController {
     }
 
     def register(UserCo userCo) {
-        User user = User.findByUserNameOrEmail_id(userCo.userName, userCo.email_id)
+        User user = User.findByUsernameOrEmail_id(userCo.userName, userCo.email_id)
         if (!user) {
             user = userCo.properties
             if (!params.photo.empty) {

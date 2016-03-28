@@ -1,4 +1,5 @@
 import com.ttnd.linksharing.Constants
+import com.ttnd.linksharing.Constants
 import com.ttnd.linksharing.Resource
 import com.ttnd.linksharing.Subscription
 import com.ttnd.linksharing.Topic
@@ -41,10 +42,10 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
         if (countRecords() <= 0) {
-            User user = new User(isAdmin: true,isActive: true, userName:"Krishna" , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Ram", lastName: "Paramhansa", email_id: "ayush.tyagi@tothenew.com")
+            User user = new User(isAdmin: true,isActive: true, username:"Krishna" , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Ram", lastName: "Paramhansa", email_id: "ayush.tyagi@tothenew.com")
 //            user.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user)
-            User user1 = new User( password: Constants.DEFAULT_PASSWORD,userName:"Madhav", confirmPassword: "abcdef", firstName: "Name", lastName: "Radha", email_id: "tyaysu@am.com")
+            User user1 = new User( password: Constants.DEFAULT_PASSWORD, username:"Madhav", confirmPassword: "abcdef", firstName: "Name", lastName: "Radha", email_id: "tyaysu@am.com")
 //            user1.confirmPassword = "abcdef"
             users = checkingAndSavingUser(user1)
         }

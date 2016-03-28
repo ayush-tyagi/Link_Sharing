@@ -9,7 +9,7 @@ class UtilService {
     }
 
     def firstService(){
-        User user1 = new User( password: "hello",userName:"M",
+        User user1 = new User( password: "hello", username:"M",
                 confirmPassword: "hello", firstName: "Naman", lastName: "Radha", email_id: "tyddsu@am.com")
         user1.validate()
         user1.save()

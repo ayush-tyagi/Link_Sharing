@@ -19,7 +19,7 @@ class LoginControllerSpec extends Specification {
 
     def "test index action"() {
         setup:""
-        User user = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+        User user = new User(username: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
         session['user'] = user
         when: ""
         controller.index()
@@ -36,7 +36,7 @@ class LoginControllerSpec extends Specification {
 
     def "test loginHandler when user is Active"(){
     setup:""
-    User user = new User(userName: "bHelo",isActive:true , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+    User user = new User(username: "bHelo",isActive:true , password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
     user.save(validate: false, flush: true)
         when:""
     controller.loginHandler(user.firstName,user.password)
@@ -46,7 +46,7 @@ class LoginControllerSpec extends Specification {
 
     def "test loginHandler when user is not Active"(){
         setup:""
-        User user = new User(userName: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
+        User user = new User(username: "bHelo", password: Constants.DEFAULT_PASSWORD, confirmPassword: "abcdef", firstName: "Name", lastName: "Krishna", email_id: "tyaysu@am.com")
         user.save(validate: false, flush: true)
         when:""
         controller.loginHandler(user.firstName,user.password)

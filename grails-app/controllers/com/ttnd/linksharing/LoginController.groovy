@@ -16,7 +16,7 @@ class LoginController {
     }
 
     def loginHandler(String userName, String password) {
-        User user = User.findByUserNameAndPassword(userName, password)
+        User user = User.findByUsernameAndPassword(userName, password)
         if (user) {
             if (user.isActive) {
                 session.user = user

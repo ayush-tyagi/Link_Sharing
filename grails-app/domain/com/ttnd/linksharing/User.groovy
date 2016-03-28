@@ -3,13 +3,25 @@ package com.ttnd.linksharing
 import com.ttnd.linksharing.co.ResourceSearchCo
 import com.ttnd.linksharing.co.UserSearchCo
 import enums.Seriousness
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
-class User {
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
+class User  implements Serializable {
 
+    private static final long serialVersionUID = 1
+
+    transient springSecurityService
+
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
     String email_id;
     String firstName;
     String lastName;
-    String userName;
+    String username;
     String password;
     Boolean isActive;
     Boolean isAdmin;
@@ -18,12 +30,12 @@ class User {
     byte[] photo;
     Date lastUpdated;
     Date dateCreated;
-    static transients = ['confirmPassword', 'subscribedTopics']
+    static transients = ['confirmPassword', 'subscribedTopics','springSecurityService']
     static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, ratingItems: ResourceRating, readingItems: ReadingItem]
     static mapping = {
         sort(id: 'desc')
         photo(sqlType: 'longblob')
-
+        password column: '`password`'
     }
 
 
@@ -35,11 +47,10 @@ class User {
         isActive(nullable: true)
         isAdmin(nullable: true)
         photo(nullable: true)
-        userName nullable: false
+        username (nullable: false,unique:true)
         confirmPassword(nullable: true, bindable: true, blank: true, validator: { confirmPassword, obj ->
             Long id = 0
             id = obj.getId()
-            //println "---------------------------->>>>  ${id} ${obj.password} ${obj.confirmPassword}"
             if (!obj.id && obj.password != confirmPassword) {
                 "password.mismatch.confirmPassword"
             }
@@ -58,9 +69,33 @@ class User {
         }
     }
 
+    User(String username, String password) {
+        this()
+        this.username = username
+        this.password = password
+    }
+
+    Set<SecAppRole> getAuthorities() {
+        SecAppUserSecAppRole.findAllBySecAppUser(this)*.secAppRole
+    }
+
+    def beforeInsert() {
+        encodePassword()
+    }
+
+    def beforeUpdate() {
+        if (isDirty('password')) {
+            encodePassword()
+        }
+    }
+
+    protected void encodePassword() {
+        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+    }
+
 
     String toString() {
-        return "${userName}"
+        return "${username}"
     }
 /*
     String getUserName() {

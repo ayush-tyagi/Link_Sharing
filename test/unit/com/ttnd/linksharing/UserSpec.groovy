@@ -35,7 +35,7 @@ class UserSpec extends Specification {
         user.count() == 1;
 
         when: ""
-        user = new User(email_id: email_id, firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: "Ram");
+        user = new User(email_id: email_id, firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", username: "Ram");
         user.save();
 
         then:
@@ -49,7 +49,7 @@ class UserSpec extends Specification {
     def "checking all fields with #password"() {
 
         given: "Create object"
-        User user = new User(password: password, userName: userName, firstName: firstName, lastName: lastName, email_id: email_id)
+        User user = new User(password: password, username: userName, firstName: firstName, lastName: lastName, email_id: email_id)
 
         when:
         user.save()
@@ -67,7 +67,7 @@ class UserSpec extends Specification {
 
     def "Checking the toString method"() {
         given: "User"
-        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: userName)
+        User user = new User(email_id: "tyagisyusb@hjgd.vb", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", username: userName)
 
         when: ""
         String result = user.toString()

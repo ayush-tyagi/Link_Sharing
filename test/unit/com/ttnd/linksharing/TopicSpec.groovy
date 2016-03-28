@@ -26,7 +26,7 @@ class TopicSpec extends Specification {
         String topicName = "Grails";
 
 
-        User user = new User(email_id: "helloa@yt.com", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", userName: "Ram");
+        User user = new User(email_id: "helloa@yt.com", firstName: "Jai", lastName: "Ho", password: "Hellopoiyt", username: "Ram");
         Topic topic = new Topic(name: topicName, createdBy: user, visibility: L_Visibility.PUBLIC)
         when: "User will save"
         topic.save();

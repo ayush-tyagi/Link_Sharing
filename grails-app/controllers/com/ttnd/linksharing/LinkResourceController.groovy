@@ -2,13 +2,14 @@ package com.ttnd.linksharing
 
 import com.ttnd.linksharing.co.LinkResourceCo
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
 class LinkResourceController extends ResourceController{
 
     def index() {
         render "Hello index"
     }
-
+    @Secured('ROLE_USER')
     def save(LinkResourceCo linkResourceCo) {
         User user= session.user
         Topic topic = Topic.findByNameAndCreatedBy(linkResourceCo.topicName,user)
